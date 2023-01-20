@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shoppie.Models;
+﻿using Shoppie.Models;
 using System.Diagnostics;
 
 namespace Shoppie.Controllers

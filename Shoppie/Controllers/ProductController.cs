@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Shoppie.Controllers
+﻿namespace Shoppie.Controllers
 {
     public class ProductController : Controller
     {
