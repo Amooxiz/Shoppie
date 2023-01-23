@@ -1,6 +1,8 @@
-﻿namespace Shoppie.Repositories
+﻿using Shoppie.Interfaces;
+
+namespace Shoppie.Repositories
 {
-    public class OfferRepository
+    public class OfferRepository : IOfferRepository
     {
     }
 }

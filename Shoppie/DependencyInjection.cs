@@ -1,6 +1,18 @@
-﻿namespace Shoppie
+﻿using Shoppie.Interfaces;
+using Shoppie.Repositories;
+using Shoppie.Services;
+
+namespace Shoppie
 {
-    public class DependencyInjection
+    public static class DependencyInjection
     {
+        public static IServiceCollection AddProjectService(this IServiceCollection services)
+        {
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IOfferService, OfferService>();
+            services.AddTransient<IOfferRepository, OfferRepository>();
+            return services;
+        }
     }
 }
