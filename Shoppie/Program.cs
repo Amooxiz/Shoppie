@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Shoppie;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddProjectService();
 
 var app = builder.Build();
 
