@@ -1,6 +1,6 @@
 ﻿namespace Shoppie.Interfaces
 {
-    public class IOfferRepository
+    public interface IOfferRepository
     {
     }
 }

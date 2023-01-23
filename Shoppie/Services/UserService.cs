@@ -1,6 +1,8 @@
-﻿namespace Shoppie.Services
+﻿using Shoppie.Interfaces;
+
+namespace Shoppie.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
     }
 }

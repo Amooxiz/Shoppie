@@ -1,6 +1,8 @@
-﻿namespace Shoppie.Services
+﻿using Shoppie.Interfaces;
+
+namespace Shoppie.Services
 {
-    public class OfferService
+    public class OfferService : IOfferService
     {
     }
 }

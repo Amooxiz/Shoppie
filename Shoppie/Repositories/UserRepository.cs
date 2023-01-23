@@ -1,6 +1,8 @@
-﻿namespace Shoppie.Repositories
+﻿using Shoppie.Interfaces;
+
+namespace Shoppie.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
     }
 }
