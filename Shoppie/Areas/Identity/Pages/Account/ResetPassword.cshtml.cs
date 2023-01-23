@@ -3,6 +3,8 @@
 #nullable disable
 
 
+using Shoppie.DataAccess;
+
 namespace Shoppie.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel

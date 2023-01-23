@@ -3,6 +3,8 @@
 #nullable disable
 
 
+using Shoppie.DataAccess;
+
 namespace Shoppie.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
