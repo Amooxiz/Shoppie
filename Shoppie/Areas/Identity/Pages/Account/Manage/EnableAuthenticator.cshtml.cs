@@ -4,7 +4,6 @@
 
 using System.Globalization;
 
-
 namespace Shoppie.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel

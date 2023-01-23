@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Shoppie.DataAccess;
+
 namespace Shoppie.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel

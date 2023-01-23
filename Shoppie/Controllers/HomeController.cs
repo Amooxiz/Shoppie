@@ -1,4 +1,4 @@
-﻿using Shoppie.Models;
+﻿using Shoppie.DataAccess.Models;
 using System.Diagnostics;
 
 namespace Shoppie.Controllers

@@ -1,4 +1,4 @@
-namespace Shoppie.Models
+namespace Shoppie.DataAccess.Models
 {
     public class ErrorViewModel
     {
