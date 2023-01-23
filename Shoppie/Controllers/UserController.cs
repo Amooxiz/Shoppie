@@ -18,14 +18,14 @@ namespace Shoppie.Controllers
             string password = form["PasswordHash"].ToString();
             Guid id = Guid.NewGuid();
 
-            User user = new() 
-            { 
-                Id = id,
-                Email = email,
-                Address = null,
-                UserName = userName,
-                PasswordHash = password
-            };
+            //User user = new() 
+            //{ 
+            //    Id = id,
+            //    Email = email,
+            //    Address = null,
+            //    UserName = userName,
+            //    PasswordHash = password
+            //};
             //TODO: Add user to database
             return "DOne";
         }
