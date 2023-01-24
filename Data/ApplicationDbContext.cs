@@ -11,9 +11,10 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
     }
 
-    public DbSet<AppUser> appUsers { get; set; }
-    public DbSet<Category> categories { get; set; }
-    public DbSet<Address> addresses { get; set; }
+    public DbSet<AppUser> AppUsers { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<Offer> Offers { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)
