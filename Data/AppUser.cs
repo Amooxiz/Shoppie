@@ -13,4 +13,3 @@ public class AppUser : IdentityUser
     public ICollection<Offer> Offers { get; set; }
     public bool isAdmin { get; set; }
 }
-

@@ -11,26 +11,13 @@
 <body>
     <header class="header">
         <nav>          
-                <a  asp-area="" asp-controller="Home" asp-action="Index">Shoppie</a>
-                    <ul >
-                        <li >
-                            <a  asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-     
-        
- 
-
-            <li>
-                <a asp-area="" asp-controller="User" asp-action="Register">Register</a>
-            </li>
-            <li>
-                <a asp-area="" asp-controller="User" asp-action="Login">Login</a>
-            </li>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Product" asp-action="AddProduct">Add Product</a>
-                </li>
-            </ul>
+            <a  asp-area="" asp-controller="Home" asp-action="Index">Shoppie</a>
+            <ul >
+                <li >
+                    <a  asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li> 
+                </ul>
+            <partial name="_LoginPartial" />
         </nav>
 
     </header>

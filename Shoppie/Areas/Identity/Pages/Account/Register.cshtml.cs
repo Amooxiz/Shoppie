@@ -82,6 +82,15 @@ namespace Shoppie.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name= "First Name")]            
+            public string Name { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+            public Address Address { get; set; }
         }
 
 
@@ -98,6 +107,12 @@ namespace Shoppie.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                //Assinging extra fields to user class
+                user.Name = Input.Name;
+                user.LastName = Input.LastName;
+                user.Address = Input.Address;
+
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
