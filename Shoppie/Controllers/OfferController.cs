@@ -85,7 +85,7 @@ namespace Shoppie.Controllers
         // GET: Offer/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id is null)
             {
                 return NotFound();
             }
@@ -97,7 +97,10 @@ namespace Shoppie.Controllers
                 return NotFound();
             }
 
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", offer.Cat);
+            var categories = await _categoryService.GetAllCategories();
+
+
+            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
             return View(offer);
         }
 
