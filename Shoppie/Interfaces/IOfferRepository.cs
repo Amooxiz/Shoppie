@@ -12,5 +12,6 @@ namespace Shoppie.Interfaces
         Offer GetOffer(int? id);
         void AddOffer(Offer offer);
         void UpdateOffer(Offer offer);
+        void DeleteOffer(Offer offer);
     }
 }

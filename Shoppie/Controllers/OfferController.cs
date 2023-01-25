@@ -69,17 +69,15 @@ namespace Shoppie.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,IsActive,IsFinished,Discount,CreationDate,CategoryId")] Offer offer)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid && offer.Category is not null)
             {
+                var categories = await _categoryService.GetAllCategories();
 
+                ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offer.CategoryId);
+                return View(offer);
+            }
                 _offerService.AddOffer(offer);
                 return RedirectToAction(nameof(Index));
-            }
-
-            var categories = await _categoryService.GetAllCategories();
-
-            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offer.CategoryId);
-            return View(offer);
         }
 
         // GET: Offer/Edit/5
@@ -125,21 +123,12 @@ namespace Shoppie.Controllers
         // GET: Offer/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-/*            if (id == null || _context.Offers == null)
-            {
+            if (id is null)
                 return NotFound();
-            }
 
-            var offer = await _context.Offers
-                .Include(o => o.Category)
-                .Include(o => o.Owner)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (offer == null)
-            {
-                return NotFound();
-            }
+            var offer = _offerService.GetOffer(id);
 
-*/            return View();
+            return offer is null ? NotFound() : View(offer);
         }
 
         // POST: Offer/Delete/5
@@ -147,24 +136,14 @@ namespace Shoppie.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-/*            if (_context.Offers == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Offers'  is null.");
-            }
-            var offer = await _context.Offers.FindAsync(id);
-            if (offer != null)
-            {
-                _context.Offers.Remove(offer);
-            }
-            
-            await _context.SaveChangesAsync();
-*/            return RedirectToAction(nameof(Index));
+            _offerService.DeleteOffer(id);
+            return RedirectToAction(nameof(Index));
         }
 
-/*        private bool OfferExists(int id)
-        {
-          return (_context.Offers?.Any(e => e.Id == id)).GetValueOrDefault()
-        }
-*/
+        /*        private bool OfferExists(int id)
+                {
+                  return (_context.Offers?.Any(e => e.Id == id)).GetValueOrDefault()
+                }
+        */
     }
 }
