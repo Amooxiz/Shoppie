@@ -45,5 +45,11 @@ namespace Shoppie.Repositories
             _context.Offers.Add(offer);
             _context.SaveChanges();
         }
+
+        public void UpdateOffer(Offer offer)
+        {
+            _context.Offers.Update(offer);
+            _context.SaveChanges();
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Shoppie.Interfaces
 /*        Task<List<OfferVM>> GetUsersOffers(string userId);*/
         OfferVM GetOffer(int? id);
         void AddOffer(Offer offer);
+        void UpdateOffer(OfferVM offer);
     }
 }

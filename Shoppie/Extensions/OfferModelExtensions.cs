@@ -16,6 +16,7 @@ public static class OfferModelExtensions
             CategoryName = o.Category.Name,
             CreationDate = o.CreationDate,
             Discount = o.Discount,
+            CategoryId = o.CategoryId,
         });
     }
 }
