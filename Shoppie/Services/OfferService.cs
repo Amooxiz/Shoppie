@@ -82,6 +82,12 @@ namespace Shoppie.Services
             };
         }
 
+        public void DeleteOffer(int id)
+        {
+            var offer = _offerRepository.GetOffer(id);
+            _offerRepository.DeleteOffer(offer);
+        }
+
         /*public async Task<List<OfferVM>> GetUsersOffers(string userId)
         {
             var offers = await _offerRepository.GetUsersOffers(userId).ToModel().ToListAsync(); 
