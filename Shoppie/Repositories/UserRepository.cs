@@ -36,5 +36,26 @@ namespace Shoppie.Repositories
                 .Include(x => x.Address)
                 .ToListAsync();
         }
+
+        public async Task<AppUser> GetUser(string id)
+        {
+            return await _userManager.Users
+                .Include(x => x.Address)
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+        
+        public async Task<bool> UpdateUser(AppUser appUser)
+        {
+            var result = await _userManager.UpdateAsync(appUser);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return false;
+            var result = await _userManager.DeleteAsync(user);
+            return result.Succeeded;
+        }
     }
 }
