@@ -109,36 +109,17 @@ namespace Shoppie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,IsActive,IsFinished,Discount,CreationDate,OwnerId,CategoryId")] Offer offer)
+        public async Task<IActionResult> Edit(OfferVM offer)
         {
-/*            if (id != offer.Id)
-            {
-                return NotFound();
-            }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", offer.CategoryId);
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(offer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OfferExists(offer.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _offerService.UpdateOffer(offer);
+                return View(offer);
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", offer.CategoryId);
-            ViewData["OwnerId"] = new SelectList(_context.AppUsers, "Id", "Id", offer.OwnerId);
-*/            return View(offer);
+    
+            return View(offer);
         }
 
         // GET: Offer/Delete/5

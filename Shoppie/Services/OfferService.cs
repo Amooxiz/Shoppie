@@ -20,6 +20,22 @@ namespace Shoppie.Services
             _offerRepository.AddOffer(offer);
         }
 
+        public void UpdateOffer(OfferVM offerVM)
+        {
+            var offerEntity = _offerRepository.GetOffer(offerVM.Id);
+
+            offerEntity.Title = offerVM.Title;
+            offerEntity.Description = offerVM.Description;
+            offerEntity.Price = offerVM.Price;
+            offerEntity.Discount = offerVM.Discount;
+            offerEntity.CategoryId = offerVM.CategoryId;
+            offerEntity.IsActive = offerVM.IsActive;
+            offerEntity.IsFinished = offerVM.IsFinished;
+            offerEntity.CreationDate = offerVM.CreationDate;
+
+            _offerRepository.UpdateOffer(offerEntity);
+        }
+
         public async Task<List<OfferVM>> GetAllActiveOffers()
         {
             var offers = await _offerRepository.GetAllActiveOffers().ToModel().ToListAsync();

@@ -11,5 +11,6 @@ namespace Shoppie.Interfaces
         /*IQueryable<Offer> GetUsersOffers(string userId);*/
         Offer GetOffer(int? id);
         void AddOffer(Offer offer);
+        void UpdateOffer(Offer offer);
     }
 }
