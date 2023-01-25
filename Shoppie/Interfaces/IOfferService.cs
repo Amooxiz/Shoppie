@@ -8,7 +8,8 @@ namespace Shoppie.Interfaces
         Task<List<OfferVM>> GetNewOffers(int count);
         Task<List<OfferVM>> GetDiscountedOffers();
         Task<List<OfferVM>> GetAllActiveOffers();
-        Task<List<OfferVM>> GetUsersOffers(string userId);
-
+/*        Task<List<OfferVM>> GetUsersOffers(string userId);*/
+        OfferVM GetOffer(int? id);
+        void AddOffer(Offer offer);
     }
 }
