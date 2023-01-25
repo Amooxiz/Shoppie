@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,10 +15,9 @@ namespace Shoppie.DataAccess.Models
         public int Price { get; set; }
         public bool IsActive { get; set; }
         public bool IsFinished { get; set; }
+        [Range(0, 1)]
         public double Discount { get; set; } = 0;
         public DateTime CreationDate { get; set; }
-        public string OwnerId { get; set; }
-        public AppUser Owner { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }

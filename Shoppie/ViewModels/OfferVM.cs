@@ -10,7 +10,6 @@
         public bool IsFinished { get; set; }
         public double Discount { get; set; } = 0;
         public DateTime CreationDate { get; set; }
-        public string OwnerId { get; set; }
         public string CategoryName { get; set; }
     }
 }

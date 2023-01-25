@@ -8,6 +8,8 @@ namespace Shoppie.Interfaces
         IQueryable<Offer> GetNewOffers(int count);
         IQueryable<Offer> GetDiscountedOffers();
         IQueryable<Offer> GetAllActiveOffers();
-        IQueryable<Offer> GetUsersOffers(string userId);
+        /*IQueryable<Offer> GetUsersOffers(string userId);*/
+        Offer GetOffer(int? id);
+        void AddOffer(Offer offer);
     }
 }

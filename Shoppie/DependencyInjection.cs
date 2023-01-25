@@ -12,6 +12,8 @@ namespace Shoppie
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IOfferService, OfferService>();
             services.AddTransient<IOfferRepository, OfferRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICategoryService, CategoryService>();
             return services;
         }
     }

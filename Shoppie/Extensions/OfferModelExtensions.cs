@@ -16,7 +16,19 @@ public static class OfferModelExtensions
             CategoryName = o.Category.Name,
             CreationDate = o.CreationDate,
             Discount = o.Discount,
-            OwnerId = o.OwnerId,
+        });
+    }
+}
+
+public static class CategoryModelExtensions
+{
+    public static IQueryable<CategoryVM> ToModel(this IQueryable<Category> source)
+    {
+        return source.Select(c => new CategoryVM
+        {
+            Id = c.Id,
+            Name = c.Name,
+            IsActive = c.IsActive,
         });
     }
 }

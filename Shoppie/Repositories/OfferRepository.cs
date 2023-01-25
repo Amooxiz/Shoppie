@@ -1,4 +1,5 @@
-﻿using Shoppie.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Shoppie.Interfaces;
 
 namespace Shoppie.Repositories
 {
@@ -29,9 +30,20 @@ namespace Shoppie.Repositories
            return _context.Offers.OrderByDescending(o => o.CreationDate).Take(count);
         }
 
-        public IQueryable<Offer> GetUsersOffers(string userId)
+        /*public IQueryable<Offer> GetUsersOffers(string userId)
         {
             return _context.Offers.Where(o => o.OwnerId == userId);
+        }*/
+
+        public Offer GetOffer(int? id)
+        {
+            return _context.Offers.Include(o => o.Category).SingleOrDefault(o => o.Id == id);
+        }
+
+        public void AddOffer(Offer offer)
+        {
+            _context.Offers.Add(offer);
+            _context.SaveChanges();
         }
     }
 }
