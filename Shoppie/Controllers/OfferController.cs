@@ -16,14 +16,17 @@ namespace Shoppie.Controllers
     {
         private readonly IOfferService _offerService;
         private readonly ICategoryService _categoryService;
+        private readonly IPdfGenerator _generator;
         private readonly ApplicationDbContext _context;
 
 
-        public OfferController(IOfferService offerService, ICategoryService categoryService,ApplicationDbContext context)
+        public OfferController(IOfferService offerService, ICategoryService categoryService, 
+            ApplicationDbContext context, IPdfGenerator generator)
         {
             _offerService = offerService;
             _categoryService = categoryService;
             _context = context;
+            _generator = generator;
         }
 
         // GET: Offer
@@ -139,11 +142,21 @@ namespace Shoppie.Controllers
             _offerService.DeleteOffer(id);
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
+        public async Task<IActionResult> GeneratePDF(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<FileResult> GeneratePDFF()
+        {
+            return _generator.GeneratePdf(new List<OfferVM>());
+        }
 
         /*        private bool OfferExists(int id)
                 {
-                  return (_context.Offers?.Any(e => e.Id == id)).GetValueOrDefault()
-                }
+                  return (_context.Offers?.Any(e => e.Id == id)).GetValueOrDefault()                }
         */
     }
 }

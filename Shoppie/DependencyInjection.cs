@@ -1,4 +1,5 @@
 ﻿using Shoppie.Interfaces;
+using Shoppie.Generators;
 using Shoppie.Repositories;
 using Shoppie.Services;
 
@@ -14,6 +15,7 @@ namespace Shoppie
             services.AddTransient<IOfferRepository, OfferRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IPdfGenerator, PdfGenerator>();
             return services;
         }
     }
