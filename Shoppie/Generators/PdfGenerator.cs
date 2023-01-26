@@ -14,9 +14,10 @@ namespace Shoppie.Generators
         {
             MemoryStream stream = new();
 
-            var document = new Document();
             var writer = new PdfWriter(stream);
             var pdf = new PdfDocument(writer);
+            var document = new Document(pdf);
+            writer.SetCloseStream(false);
 
             document.Add(new Paragraph("xd"));
             document.Close();
