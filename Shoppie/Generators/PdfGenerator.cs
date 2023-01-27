@@ -28,6 +28,8 @@ namespace Shoppie.Generators
             var font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
             var boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
+            
+
 
             document.Add(new Paragraph("xd"));
             document.Close();
