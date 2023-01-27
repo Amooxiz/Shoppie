@@ -40,7 +40,7 @@ namespace Shoppie.Controllers
             cartProduct.Price = offer.Price;
             cart.AddItem(cartProduct);
             _httpContextAccessor.HttpContext.Response.Cookies.Append("cart", cart.ToString());
-            return RedirectToAction("Offer/Index");
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
