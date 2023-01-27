@@ -1,10 +1,14 @@
-﻿using iText.Kernel.Pdf;
+﻿using iText.IO.Font;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NuGet.Packaging;
 using Shoppie.Interfaces;
 using Shoppie.ViewModels;
+using System.Drawing;
 
 namespace Shoppie.Generators
 {
@@ -18,6 +22,12 @@ namespace Shoppie.Generators
             var pdf = new PdfDocument(writer);
             var document = new Document(pdf);
             writer.SetCloseStream(false);
+
+            document.SetMargins(20, 20, 20, 20);
+            
+            var font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+            var boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
 
             document.Add(new Paragraph("xd"));
             document.Close();
