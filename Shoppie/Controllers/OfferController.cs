@@ -33,6 +33,7 @@ namespace Shoppie.Controllers
         public async Task<IActionResult> Index()
         {
             var offers = await _offerService.GetAllOffers();
+            
             return  View(offers);
         }
 
