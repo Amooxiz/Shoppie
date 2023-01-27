@@ -11,7 +11,7 @@
         public string Description { get; set; }
 
         [Display(Name = "Price")]
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         [Display(Name = "Is active")]
         public bool IsActive { get; set; }
