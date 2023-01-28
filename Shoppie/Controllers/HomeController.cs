@@ -24,7 +24,7 @@ namespace Shoppie.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var offers = await _offerService.GetNewOffers(10);
+            var offers = await _offerService.GetNewOffers(3);
             string? rateCookie = _cookieService.GetCookie("rate");
             if (rateCookie is null)
             {
@@ -54,11 +54,6 @@ namespace Shoppie.Controllers
         {
             _cookieService.SetCookie("rate", rate);
             return RedirectToAction("Index");
-        }
-        
-        public IActionResult AllOffers()
-        {
-            return RedirectToAction("Index", "Offer");
         }
         
         public IActionResult DiscountOffers()
