@@ -6,6 +6,6 @@ namespace Shoppie.Interfaces
 {
     public interface IPdfGenerator
     {
-        public FileResult GeneratePdf(IEnumerable<OfferVM> offers);
+        public FileResult GeneratePdf(IEnumerable<OfferVM> offers, string currencyEmblem);
     }
 }

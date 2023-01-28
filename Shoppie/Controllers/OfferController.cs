@@ -152,7 +152,13 @@ namespace Shoppie.Controllers
         [HttpPost]
         public async Task<FileResult> GeneratePDFF()
         {
-            return _generator.GeneratePdf(new List<OfferVM>());
+            string c = "euro";
+            return _generator.GeneratePdf(new List<OfferVM>
+                { 
+                    new OfferVM { Id = 1,Title= "Fajna super rybka", CategoryName = "Ryby"},
+                    new OfferVM { Id = 2,Title= "Giga piękny ogród", CategoryName = "Ogród"}, 
+                    new OfferVM { Id = 3,Title= "Piękne zwierzątka",CategoryName = "Zwierzęta"}
+            },c);
         }
 
         /*        private bool OfferExists(int id)
