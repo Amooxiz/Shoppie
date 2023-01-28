@@ -11,17 +11,23 @@
 <body>
     <header class="header">
         <nav>          
-            <a  asp-area="" asp-controller="Home" asp-action="Index">Shoppie</a>
             <ul >
+            <a  asp-area="" asp-controller="Home" asp-action="Index">Shoppie</a>
                 <li >
                     <a  asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li>
                     <a asp-area="" asp-controller="Offer" asp-action="Index">Offer</a>
                 </li>
-            </ul>
-            <partial name="_ManagmentPartial" />
+           <li>
+
+                <partial name="_ManagmentPartial" />
+           </li>
+            <liv>
+
             <partial name="_LoginPartial" />
+            </liv>
+            </ul>
 
         </nav>
 
