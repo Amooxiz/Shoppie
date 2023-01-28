@@ -10,21 +10,33 @@ namespace Shoppie.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IOfferService _offerService;
+        private readonly INBPIntegratorService _nbpIntegratorService;
+        private readonly ICookieService _cookieService;
 
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, IOfferService offerService)
+        public HomeController(ILogger<HomeController> logger, IOfferService offerService, INBPIntegratorService nBPIntegratorService, ICookieService cookieService)
         {
             _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
             _offerService = offerService;
+            _nbpIntegratorService = nBPIntegratorService;
+            _cookieService = cookieService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var offers = await _offerService.GetAllOffers();
-            string? cartString = _httpContextAccessor.HttpContext.Request.Cookies["cart"];
-            Cart cart = new Cart(cartString);
+            var offers = await _offerService.GetNewOffers(10);
+            string? rateCookie = _cookieService.GetCookie("rate");
+            if (rateCookie is null)
+            {
+                rateCookie = "PLN";
+                _cookieService.SetCookie("rate", rateCookie);
+            }
+            else if (rateCookie != "PLN")
+            {
+                double rate = await _nbpIntegratorService.GetRate(rateCookie);
+                offers.ForEach(x => x.Price = x.Price * rate);
+            }
+            var cart = _cookieService.GetCart();
             ViewBag.cartCount = cart.ItemCount;
 
             return View(offers);
@@ -33,14 +45,26 @@ namespace Shoppie.Controllers
         public IActionResult AddToCart(int id)
         {
             var offer = _offerService.GetOffer(id);
-            string? cartString = _httpContextAccessor.HttpContext.Request.Cookies["cart"];
-            Cart cart = new Cart(cartString);
-            CartProduct cartProduct = new CartProduct();
-            cartProduct.Title = offer.Title;
-            cartProduct.Price = offer.Price;
-            cart.AddItem(cartProduct);
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("cart", cart.ToString());
+            _cookieService.AddItemToCart(offer);
+            
             return RedirectToAction("Index");
+        }
+        
+        public IActionResult ChangeRate(string rate)
+        {
+            _cookieService.SetCookie("rate", rate);
+            return RedirectToAction("Index");
+        }
+        
+        public IActionResult AllOffers()
+        {
+            return RedirectToAction("Index", "Offer");
+        }
+        
+        public IActionResult DiscountOffers()
+        {
+            throw new NotImplementedException();
+            //return RedirectToAction("Discount", "Offer"); Po zrobieniu metody Discount w offerControlerze mozna to odkomentowac
         }
 
         public IActionResult Privacy()
