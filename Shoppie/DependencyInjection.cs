@@ -16,6 +16,8 @@ namespace Shoppie
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IPdfGenerator, PdfGenerator>();
+            services.AddTransient<INBPIntegratorService, NBPIntegratorService>();
+            services.AddTransient<ICookieService, CookieService>();
             return services;
         }
     }
