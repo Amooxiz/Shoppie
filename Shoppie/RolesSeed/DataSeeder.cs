@@ -36,7 +36,7 @@
             {
                 var user = new AppUser
                 {
-                    UserName = "admin",
+                    UserName = "admin@admin.com",
                     Email = "admin@admin.com",
                     LastName = "admin",
                     Name = "admin",
@@ -57,6 +57,8 @@
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, Roles.Administrator.ToString()).Wait();
+                    var token = userManager.GenerateEmailConfirmationTokenAsync(user);
+                    userManager.ConfirmEmailAsync(user, token.Result);
                 }
             }
         }
