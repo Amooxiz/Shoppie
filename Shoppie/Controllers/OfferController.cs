@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Shoppie.DataAccess;
 using Shoppie.DataAccess.Models;
 using Shoppie.Interfaces;
+using Shoppie.RolesSeed;
 using Shoppie.ViewModels;
 
 namespace Shoppie.Controllers
@@ -143,14 +144,23 @@ namespace Shoppie.Controllers
             _offerService.DeleteOffer(id);
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
-        public async Task<IActionResult> GeneratePDF(int id)
+
+        [Authorize(Roles = $"Administrator")]
+        public async Task<IActionResult> Management()
         {
-            return View();
+            ManagementModel model = new ManagementModel
+            {
+                Offers = await _offerService.GetAllOffers(),
+                Categories = await _categoryService.GetAllCategories(),
+        };
+            
+            ViewBag.CategoriesSelectList = new SelectList(model.Categories, "Id", "Name", model.SelectedCategoryId);
+            
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<FileResult> GeneratePDFF()
+        public async Task<FileResult> GeneratePDF(int SelectedCategoryId)
         {
             string c = "euro";
             return _generator.GeneratePdf(new List<OfferVM>
@@ -160,10 +170,5 @@ namespace Shoppie.Controllers
                     new OfferVM { Id = 3,Title= "Piękne zwierzątka",CategoryName = "Zwierzęta"}
             },c);
         }
-
-        /*        private bool OfferExists(int id)
-                {
-                  return (_context.Offers?.Any(e => e.Id == id)).GetValueOrDefault()                }
-        */
     }
 }
