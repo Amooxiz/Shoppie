@@ -14,7 +14,7 @@ namespace Shoppie.Generators
 {
     public class PdfGenerator : IPdfGenerator
     {
-        public FileResult GeneratePdf(IEnumerable<OfferVM> offers, string currencyEmblem)
+        public FileResult GeneratePdf(IEnumerable<OfferVM> offers, string currencyEmblem = "PLN")
         {
             MemoryStream stream = new();
             var category = offers.First().CategoryName;

@@ -88,6 +88,13 @@ namespace Shoppie.Services
             _offerRepository.DeleteOffer(offer);
         }
 
+        public Task<List<OfferVM>> GetOffersByCategoryId(int id)
+        {
+            var offers = _offerRepository.GetOffersByCategoryId(id);
+
+            return offers.ToModel().ToListAsync();
+        }
+
         /*public async Task<List<OfferVM>> GetUsersOffers(string userId)
         {
             var offers = await _offerRepository.GetUsersOffers(userId).ToModel().ToListAsync(); 

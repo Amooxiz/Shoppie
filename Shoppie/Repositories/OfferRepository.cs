@@ -57,5 +57,10 @@ namespace Shoppie.Repositories
             _context.Offers.Remove(offer);
             _context.SaveChanges();
         }
+
+        public IQueryable<Offer> GetOffersByCategoryId(int id)
+        {
+            return _context.Offers.Where(o => o.CategoryId == id);
+        }
     }
 }

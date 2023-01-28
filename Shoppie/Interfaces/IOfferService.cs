@@ -5,6 +5,7 @@ namespace Shoppie.Interfaces
     public interface IOfferService
     {
         Task<List<OfferVM>> GetAllOffers();
+        Task<List<OfferVM>> GetOffersByCategoryId(int id);
         Task<List<OfferVM>> GetNewOffers(int count);
         Task<List<OfferVM>> GetDiscountedOffers();
         Task<List<OfferVM>> GetAllActiveOffers();
