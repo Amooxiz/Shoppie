@@ -64,7 +64,7 @@ namespace Shoppie.Controllers
         public IActionResult DiscountOffers()
         {
             throw new NotImplementedException();
-            //return View("~/Views/Offer/Discount")     tutaj trzeba zrobic widok Discount.cshtml w ofertach i przekazywać do niego liste przecenionych ofert
+            //return RedirectToAction("Discount", "Offer"); Po zrobieniu metody Discount w offerControlerze mozna to odkomentowac
         }
 
         public IActionResult Privacy()
