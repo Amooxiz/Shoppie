@@ -34,28 +34,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Offers)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offers[0].Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offers[0].Price)
+               Full Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offers[0].IsActive)
+                Is Active
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offers[0].IsFinished)
+                Is Finished
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offers[0].Discount)
+                Discount
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offers[0].CreationDate)
+                Creation Date    
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offers[0].CategoryName)
+                Category Name
             </th>
             <th></th>
         </tr>
@@ -80,9 +80,16 @@
         <td>
             <p>@item.IsFinished</p>     
         </td>
-        <td>
-            <p>@item.Discount</p>
-        </td>
+        @if (item.Discount > 0)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)%
+            </td>
+        }
+        else
+        {
+            <td></td>
+        }
         <td>
             <p>@item.CreationDate</p>
         </td>

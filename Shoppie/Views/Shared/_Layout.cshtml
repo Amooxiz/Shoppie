@@ -12,21 +12,21 @@
     <header class="header">
         <nav>          
             <ul >
-            <a  asp-area="" asp-controller="Home" asp-action="Index">Shoppie</a>
-                <li >
-                    <a  asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Offer" asp-action="Index">Offer</a>
-                </li>
-           <li>
+                <a  asp-area="" asp-controller="Home" asp-action="Index">Shoppie</a>
+                    <li >
+                        <a  asp-area="" asp-controller="Home" asp-action="Discount">Discounts</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Offer" asp-action="Index">All ads</a>
+                    </li>
+               <li>
 
-                <partial name="_ManagmentPartial" />
-           </li>
-            <liv>
+                    <partial name="_ManagmentPartial" />
+               </li>
+                <liv>
 
-            <partial name="_LoginPartial" />
-            </liv>
+                    <partial name="_LoginPartial" />
+                </liv>
             </ul>
 
         </nav>

@@ -56,9 +56,11 @@ namespace Shoppie.Controllers
             return RedirectToAction("Index");
         }
         
-        public IActionResult DiscountOffers()
+        public async Task<IActionResult> Discount()
         {
-            throw new NotImplementedException();
+            var offers = await _offerService.GetDiscountedOffers();
+
+            return View(offers);
             //return RedirectToAction("Discount", "Offer"); Po zrobieniu metody Discount w offerControlerze mozna to odkomentowac
         }
 
