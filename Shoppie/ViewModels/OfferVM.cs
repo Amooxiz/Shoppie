@@ -21,6 +21,7 @@
         public bool IsFinished { get; set; }
 
         [Display(Name = "Discount")]
+        [Range(0,100)]
         public double Discount { get; set; } = 0;
 
         [Display(Name = "Creation date")]
