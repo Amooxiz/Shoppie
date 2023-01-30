@@ -145,26 +145,40 @@ namespace Shoppie.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = $"Administrator")]
+       [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Management()
         {
-            ManagementModel model = new ManagementModel
+            if (TempData["categories"] is not null)
             {
-                Offers = await _offerService.GetAllOffers(),
-                Categories = await _categoryService.GetAllCategories(),
-        };
-            
+                ModelState.AddModelError("categories", TempData["categories"].ToString());
+            }
+
+            var offers = await _offerService.GetAllOffers();
+            var categories = await _categoryService.GetAllCategories();
+        
+            OfferManagementModel model = new OfferManagementModel
+            {
+                Offers = offers,
+                Categories = categories,
+            };
             ViewBag.CategoriesSelectList = new SelectList(model.Categories, "Id", "Name");
             
             return View(model);
         }
 
         [HttpPost]
-        public async Task<FileResult> GeneratePDF(int SelectedCategoryId)
+        public async Task<IActionResult> GeneratePDF(int SelectedCategoryId)
         {
             var offers = await _offerService.GetOffersByCategoryId(SelectedCategoryId);
             
+            if(offers.Count == 0)
+            {
+                TempData["categories"] = "Cannot generate PDF for category with no associated offers";
+                return RedirectToAction(nameof(Management));
+            }
+
             string c = "euro";
+
             return _generator.GeneratePdf(offers);
         }
     }
