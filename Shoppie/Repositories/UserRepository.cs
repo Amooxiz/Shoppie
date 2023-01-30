@@ -40,10 +40,9 @@ namespace Shoppie.Repositories
             return await _context.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id && u.isAdmin == false);
         }
         
-        public async Task<bool> UpdateUser(AppUser appUser)
+        public async Task UpdateUser(AppUser appUser)
         {
             var result = await _userManager.UpdateAsync(appUser);
-            return result.Succeeded;
         }
 
         public async Task<bool> DeleteUser(string id)
