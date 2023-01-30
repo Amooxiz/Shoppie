@@ -70,7 +70,7 @@ namespace Shoppie.Controllers
 
             await _signInManager.RefreshSignInAsync(user);
 
-            return RedirectToAction("Management");
+            return RedirectToAction("Index", "Offer");
         }
 
         // GET: AppUserController/Delete/5
