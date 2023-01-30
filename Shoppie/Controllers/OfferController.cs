@@ -57,6 +57,7 @@ namespace Shoppie.Controllers
         }
 
         // GET: Offer/Create
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Create()
         {
             Offer offerModel = new();
@@ -72,6 +73,7 @@ namespace Shoppie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,IsActive,IsFinished,Discount,CreationDate,CategoryId")] Offer offer)
         {
             if (!ModelState.IsValid && offer.Category is not null)
@@ -86,6 +88,7 @@ namespace Shoppie.Controllers
         }
 
         // GET: Offer/Edit/5
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -112,6 +115,7 @@ namespace Shoppie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Edit(OfferVM offer)
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", offer.CategoryId);
@@ -126,6 +130,7 @@ namespace Shoppie.Controllers
         }
 
         // GET: Offer/Delete/5
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null)
@@ -139,6 +144,7 @@ namespace Shoppie.Controllers
         // POST: Offer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             _offerService.DeleteOffer(id);

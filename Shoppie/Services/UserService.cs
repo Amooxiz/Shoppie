@@ -1,4 +1,7 @@
-﻿using Shoppie.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Shoppie.Extensions;
+using Shoppie.Interfaces;
+using Shoppie.RolesSeed;
 using Shoppie.ViewModels;
 
 namespace Shoppie.Services
@@ -6,10 +9,13 @@ namespace Shoppie.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public UserService(IUserRepository userRepository)
+
+        public UserService(IUserRepository userRepository, UserManager<AppUser> userManager)
         {
             _userRepository = userRepository;
+            _userManager = userManager;
         }
 
         public async Task<bool> ChangePersonalDiscount(double discount, string userId)
@@ -21,37 +27,19 @@ namespace Shoppie.Services
 
         public async Task<List<AppUserVM>> GetUsers()
         {
-            var users = await _userRepository.GetUsers();
 
-            List<AppUserVM> usersToReturn = new List<AppUserVM>();
+            var users = await _userRepository
+                .GetUsers()
+                .ToModel()
+                .ToListAsync();
+            
+            return users;
 
-            foreach (var user in users)
-            {
-                AppUserVM vm = new AppUserVM()
-                {
-                    Id = user.Id,
-                    Street = user.Address.Street,
-                    ApartamentNr= user.Address.ApartamentNr,
-                    BuildingNr= user.Address.BuildingNr,
-                    City= user.Address.City,
-                    Country= user.Address.Country,
-                    Email = user.Email,
-                    PersonalDicount = user.PersonalDicount,
-                    PostalCode = user.Address.PostalCode,
-                    LastName = user.LastName,
-                    Name= user.Name,
-                    UserName = user.UserName,
-                };
-                usersToReturn.Add(vm);
-            }
-            return usersToReturn;
         }
         
         public async Task<AppUserVM> GetUser(string id)
         {
-            var user = await _userRepository.GetUser(id);
-
-            if (user == null) throw new Exception("User not found");
+            var user = await _userRepository.GetUser(id)
 
             AppUserVM vm = new AppUserVM()
             {

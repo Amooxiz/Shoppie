@@ -13,8 +13,8 @@ namespace Shoppie.Controllers
         {
             _userService = userService;
         }
-        // GET: AppUserController
-        public async Task<ActionResult> Index()
+        
+        public async Task<IActionResult> Management()
         {
             var users = await _userService.GetUsers();
             return View(users);
@@ -52,6 +52,10 @@ namespace Shoppie.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userService.GetUser(id);
+
+            if (user is null)
+                return NotFound();
+
             return View(user);
         }
 
@@ -62,7 +66,7 @@ namespace Shoppie.Controllers
         {
             try
             {
-                AppUserVM vm = new AppUserVM()
+                AppUserVM vm = new()
                 {
                     Street = collection["Street"],
                     City = collection["City"],

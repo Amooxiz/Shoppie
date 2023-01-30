@@ -17,17 +17,17 @@ namespace Shoppie.Repositories
         }
         public IQueryable<Offer> GetAllActiveOffers()
         {
-            return _context.Offers.Where(o => o.IsActive && o.Category.IsActive == true);
+            return _context.Offers.Where(o => o.IsActive && o.IsFinished != true && o.Category.IsActive == true);
         }
 
         public IQueryable<Offer> GetDiscountedOffers()
         {
-            return _context.Offers.Where(o => o.Discount > 0 && o.Category.IsActive == true);
+            return _context.Offers.Where(o => o.Discount > 0 && o.IsFinished != true && o.Category.IsActive == true);
         }
 
         public IQueryable<Offer> GetNewOffers(int count)
         {
-           return _context.Offers.Where(o => o.Category.IsActive == true).OrderByDescending(o => o.CreationDate).Take(count);
+           return _context.Offers.Where(o => o.IsFinished != true && o.Category.IsActive == true).OrderByDescending(o => o.CreationDate).Take(count);
         }
 
         /*public IQueryable<Offer> GetUsersOffers(string userId)
