@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Shoppie.DataAccess;
 using Shoppie.DataAccess.Models;
 using Shoppie.Interfaces;
+using Shoppie.RolesSeed;
 using Shoppie.ViewModels;
 
 namespace Shoppie.Controllers
@@ -32,7 +33,7 @@ namespace Shoppie.Controllers
         // GET: Offer
         public async Task<IActionResult> Index()
         {
-            var offers = await _offerService.GetAllOffers();
+            var offers = await _offerService.GetAllActiveOffers();
             
             return  View(offers);
         }
@@ -56,6 +57,7 @@ namespace Shoppie.Controllers
         }
 
         // GET: Offer/Create
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Create()
         {
             Offer offerModel = new();
@@ -71,6 +73,7 @@ namespace Shoppie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,IsActive,IsFinished,Discount,CreationDate,CategoryId")] Offer offer)
         {
             if (!ModelState.IsValid && offer.Category is not null)
@@ -85,6 +88,7 @@ namespace Shoppie.Controllers
         }
 
         // GET: Offer/Edit/5
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -111,6 +115,7 @@ namespace Shoppie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Edit(OfferVM offer)
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", offer.CategoryId);
@@ -125,6 +130,7 @@ namespace Shoppie.Controllers
         }
 
         // GET: Offer/Delete/5
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null)
@@ -138,32 +144,48 @@ namespace Shoppie.Controllers
         // POST: Offer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             _offerService.DeleteOffer(id);
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
-        public async Task<IActionResult> GeneratePDF(int id)
+
+       [Authorize(Roles = $"Administrator")]
+        public async Task<IActionResult> Management()
         {
-            return View();
+            if (TempData["categories"] is not null)
+            {
+                ModelState.AddModelError("categories", TempData["categories"].ToString());
+            }
+
+            var offers = await _offerService.GetAllOffers();
+            var categories = await _categoryService.GetAllCategories();
+        
+            OfferManagementModel model = new()
+            {
+                Offers = offers,
+                Categories = categories,
+            };
+            ViewBag.CategoriesSelectList = new SelectList(model.Categories, "Id", "Name");
+            
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<FileResult> GeneratePDFF()
+        public async Task<IActionResult> GeneratePDF(int SelectedCategoryId)
         {
-            string c = "euro";
-            return _generator.GeneratePdf(new List<OfferVM>
-                { 
-                    new OfferVM { Id = 1,Title= "Fajna super rybka", CategoryName = "Ryby"},
-                    new OfferVM { Id = 2,Title= "Giga piękny ogród", CategoryName = "Ogród"}, 
-                    new OfferVM { Id = 3,Title= "Piękne zwierzątka",CategoryName = "Zwierzęta"}
-            },c);
-        }
+            var offers = await _offerService.GetOffersByCategoryId(SelectedCategoryId);
+            
+            if(offers.Count == 0)
+            {
+                TempData["categories"] = "Cannot generate PDF for category with no associated offers";
+                return RedirectToAction(nameof(Management));
+            }
 
-        /*        private bool OfferExists(int id)
-                {
-                  return (_context.Offers?.Any(e => e.Id == id)).GetValueOrDefault()                }
-        */
+            string c = "euro";
+
+            return _generator.GeneratePdf(offers);
+        }
     }
 }

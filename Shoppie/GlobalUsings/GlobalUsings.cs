@@ -10,3 +10,4 @@ global using System.Text.Encodings.Web;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Identity.UI.Services;
 global using Shoppie.DataAccess.Models;
+global using Shoppie.ViewModels;

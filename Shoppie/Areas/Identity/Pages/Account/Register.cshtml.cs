@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Microsoft.AspNetCore.Identity;
 using Shoppie.DataAccess;
+using Shoppie.RolesSeed;
 
 namespace Shoppie.Areas.Identity.Pages.Account
 {
@@ -120,6 +122,8 @@ namespace Shoppie.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    _userManager.AddToRoleAsync(user, Roles.BasicUser.ToString()).Wait();
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

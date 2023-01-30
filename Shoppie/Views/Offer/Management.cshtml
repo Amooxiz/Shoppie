@@ -1,0 +1,107 @@
+﻿@model OfferManagementModel
+
+@{
+    ViewData["Title"] = "Management";
+}
+
+<h1>Management</h1>
+<h3>Categories</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GeneratePDF">
+            <div class="form-group">
+                <select asp-for="SelectedCategoryId" class="form-control" asp-items="ViewBag.CategoriesSelectList"></select>
+                <span asp-validation-for="Categories"></span>
+            </div>
+            <div class="form-group">
+                @if(Model.Categories.Count > 0)
+                {
+                    <input type="submit" value="Generate PDF" class="btn btn-primary" />
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<h3>Offers</h3>
+
+<a class="btn btn-info" asp-action="Create">Create New</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+               Full Price
+            </th>
+            <th>
+                Is Active
+            </th>
+            <th>
+                Is Finished
+            </th>
+            <th>
+                Discount
+            </th>
+            <th>
+                Creation Date    
+            </th>
+            <th>
+                Category Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var item in Model.Offers)
+{
+    <tr>
+        <td>
+           <p>@item.Title</p>     
+        </td>
+        <td>
+            <p>@item.Description</p>
+        </td>
+        <td>
+            <p>@item.Price</p>
+        </td>
+        <td>
+            <p>@item.IsActive</p>     
+        </td>
+        <td>
+            <p>@item.IsFinished</p>     
+        </td>
+        @if (item.Discount > 0)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)%
+            </td>
+        }
+        else
+        {
+            <td></td>
+        }
+        <td>
+            <p>@item.CreationDate</p>
+        </td>
+        <td>
+            <p>@item.CategoryName</p>
+        </td>
+        <td>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

@@ -24,7 +24,7 @@ namespace Shoppie.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var offers = await _offerService.GetNewOffers(10);
+            var offers = await _offerService.GetNewOffers(3);
             string? rateCookie = _cookieService.GetCookie("rate");
             if (rateCookie is null)
             {
@@ -56,14 +56,11 @@ namespace Shoppie.Controllers
             return RedirectToAction("Index");
         }
         
-        public IActionResult AllOffers()
+        public async Task<IActionResult> Discount()
         {
-            return RedirectToAction("Index", "Offer");
-        }
-        
-        public IActionResult DiscountOffers()
-        {
-            throw new NotImplementedException();
+            var offers = await _offerService.GetDiscountedOffers();
+
+            return View(offers);
             //return RedirectToAction("Discount", "Offer"); Po zrobieniu metody Discount w offerControlerze mozna to odkomentowac
         }
 

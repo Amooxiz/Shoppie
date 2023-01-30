@@ -5,6 +5,7 @@ namespace Shoppie.Interfaces
     public interface IOfferRepository
     {
         IQueryable<Offer> GetAllOffers();
+        IQueryable<Offer> GetOffersByCategoryId(int id);
         IQueryable<Offer> GetNewOffers(int count);
         IQueryable<Offer> GetDiscountedOffers();
         IQueryable<Offer> GetAllActiveOffers();

@@ -1,4 +1,7 @@
-﻿using Shoppie.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Shoppie.Extensions;
+using Shoppie.Interfaces;
+using Shoppie.RolesSeed;
 using Shoppie.ViewModels;
 
 namespace Shoppie.Services
@@ -6,10 +9,15 @@ namespace Shoppie.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<AppUser> _userManager;
 
-        public UserService(IUserRepository userRepository)
+
+        public UserService(IUserRepository userRepository, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> ChangePersonalDiscount(double discount, string userId)
@@ -21,37 +29,19 @@ namespace Shoppie.Services
 
         public async Task<List<AppUserVM>> GetUsers()
         {
-            var users = await _userRepository.GetUsers();
 
-            List<AppUserVM> usersToReturn = new List<AppUserVM>();
+            var users = await _userRepository
+                .GetUsers()
+                .ToModel()
+                .ToListAsync();
+            
+            return users;
 
-            foreach (var user in users)
-            {
-                AppUserVM vm = new AppUserVM()
-                {
-                    Id = user.Id,
-                    Street = user.Address.Street,
-                    ApartamentNr= user.Address.ApartamentNr,
-                    BuildingNr= user.Address.BuildingNr,
-                    City= user.Address.City,
-                    Country= user.Address.Country,
-                    Email = user.Email,
-                    PersonalDicount = user.PersonalDicount,
-                    PostalCode = user.Address.PostalCode,
-                    LastName = user.LastName,
-                    Name= user.Name,
-                    UserName = user.UserName,
-                };
-                usersToReturn.Add(vm);
-            }
-            return usersToReturn;
         }
         
         public async Task<AppUserVM> GetUser(string id)
         {
             var user = await _userRepository.GetUser(id);
-
-            if (user == null) throw new Exception("User not found");
 
             AppUserVM vm = new AppUserVM()
             {
@@ -72,22 +62,33 @@ namespace Shoppie.Services
             return vm;
         }
         
-        public async Task<bool> EditUser(AppUserVM appUser)
+        public async Task UpdateUser(AppUserManagementModel appUser)
         {
-            var user = await _userRepository.GetUser(appUser.Id);
+            var user = await _userRepository.GetUser(appUser.User.Id);
 
-            user.PersonalDicount = appUser.PersonalDicount;
-            user.Address.Street = appUser.Street;
-            user.Address.ApartamentNr = appUser.ApartamentNr;
-            user.Address.BuildingNr = appUser.BuildingNr;
-            user.Address.City = appUser.City;
-            user.Address.Country = appUser.Country;
-            user.Address.PostalCode = appUser.PostalCode;
-            user.LastName = appUser.LastName;
-            user.Name = appUser.Name;
-            user.UserName = appUser.UserName;
+            user.UserName = appUser.User.UserName;
+            user.Address.Street = appUser.User.Street;
+            user.Address.ApartamentNr = appUser.User.ApartamentNr;
+            user.Address.BuildingNr = appUser.User.BuildingNr;
+            user.Address.City = appUser.User.City;
+            user.Address.Country = appUser.User.Country;
+            user.Address.PostalCode = appUser.User.PostalCode;
+            user.Name = appUser.User.Name;
+            user.LastName = appUser.User.LastName;
+            user.Email = appUser.User.Email;
+            user.PersonalDicount = appUser.User.PersonalDicount;
 
-            return await _userRepository.UpdateUser(user);
+            var isInRole = _userManager.IsInRoleAsync(user, ((Roles)appUser.SelectedRoleId).ToString()).Result;
+            if (!isInRole)
+            {  
+                await _userManager.AddToRoleAsync(user, ((Roles)appUser.SelectedRoleId).ToString());                            
+            }
+            else if (appUser.SelectedRoleId != (int)Roles.Administrator)
+            {
+                await _userManager.RemoveFromRoleAsync(user, Roles.Administrator.ToString());                
+            }
+            
+            await _userRepository.UpdateUser(user);
         }
         
         public async Task<bool> DeleteUser(string id)

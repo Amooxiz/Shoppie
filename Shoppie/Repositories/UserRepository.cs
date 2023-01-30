@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shoppie.DataAccess;
 using Shoppie.Interfaces;
+using Shoppie.RolesSeed;
 
 namespace Shoppie.Repositories
 {
@@ -29,25 +30,19 @@ namespace Shoppie.Repositories
             return result.Succeeded;
         }
 
-        public async Task<List<AppUser>> GetUsers()
+        public IQueryable<AppUser> GetUsers()
         {
-            return await _userManager.Users
-                .Where(x => x.isAdmin == false)
-                .Include(x => x.Address)
-                .ToListAsync();
+            return _context.Users.Where(u => u.isAdmin == false);
         }
 
         public async Task<AppUser> GetUser(string id)
         {
-            return await _userManager.Users
-                .Include(x => x.Address)
-                .SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id && u.isAdmin == false);
         }
         
-        public async Task<bool> UpdateUser(AppUser appUser)
+        public async Task UpdateUser(AppUser appUser)
         {
             var result = await _userManager.UpdateAsync(appUser);
-            return result.Succeeded;
         }
 
         public async Task<bool> DeleteUser(string id)

@@ -23,6 +23,14 @@ body {
     border-radius: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
+.card {
+    background-color: #5A198C;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    width: 600px;
+    height: 360px;
+}
 .form label {
     color: white;
 }
@@ -61,10 +69,13 @@ body {
 }
 .header nav{
     display: flex;
+    align-content: center;
   
 }
 .header nav ul {
     display:flex;
+    align-items: center;
+    align-content: center;
 }
     .header nav ul li  {
         list-style: none;
@@ -75,11 +86,24 @@ body {
         color:white;
         text-decoration: none;
     }
+.navItem {
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    background-color: #5A198C;
+    margin: 0px 0px 100px 0px;
+}
+
+#registerForm{
+    width: 500px;
+}
+
 .header {
     font-size: 22px;
     font-weight: 700;
-    display:flex;
+    display: flex;
     align-items: center;
+    align-content: center;
     color: white;
     text-decoration: none;
     height: 70px;
@@ -95,10 +119,39 @@ body {
     width:500px;
     margin: 0 auto;
 }
+.card p {
+    font-size:17px;
+    font-weight: 600;
+}
 .register{
     width: 500px;
     margin: 0 auto;
 }
-
-
+.login__container .flex__container .form{
+    width: 600px;
+    margin: 30px;
+}
+.login__container hr {
+    color: white;
+    height:1px;
+    font-weight: 700;
+}
+.flex__container {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+.form .form-checkbox{
+    width:20px;
+    height: 20px;
+    margin: 15px;
+}
+.form input[type="checkbox"]:checked + label:before {
+    background-color: green;
+}
+.form hr {
+    color:white;
+    height:1px;
+    font-weight:700;
+}
 

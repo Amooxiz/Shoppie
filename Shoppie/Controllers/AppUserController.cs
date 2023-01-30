@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Shoppie.Interfaces;
+using Shoppie.RolesSeed;
 using Shoppie.ViewModels;
 
 namespace Shoppie.Controllers
@@ -8,13 +11,17 @@ namespace Shoppie.Controllers
     public class AppUserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public AppUserController(IUserService userService)
+        public AppUserController(IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userService = userService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
-        // GET: AppUserController
-        public async Task<ActionResult> Index()
+
+        public async Task<IActionResult> Management()
         {
             var users = await _userService.GetUsers();
             return View(users);
@@ -24,77 +31,52 @@ namespace Shoppie.Controllers
         public async Task<ActionResult> Details(string id)
         {
             var user = await _userService.GetUser(id);
+
+            if (user is null)
+                return NotFound();
+
             return View(user);
         }
 
-        // GET: AppUserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AppUserController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: AppUserController/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userService.GetUser(id);
-            return View(user);
+
+            if (user is null)
+                return NotFound();
+
+            var model = new AppUserManagementModel
+            {
+                User = user,
+            };
+
+            return View(model);
         }
 
         // POST: AppUserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(AppUserManagementModel model)
         {
-            try
-            {
-                AppUserVM vm = new AppUserVM()
-                {
-                    Street = collection["Street"],
-                    City = collection["City"],
-                    PostalCode = collection["PostalCode"],
-                    Country = collection["Country"],
-                    BuildingNr = collection["BuildingNr"],
-                    PersonalDicount = double.Parse(collection["PersonalDicount"]),
-                    ApartamentNr = int.Parse(collection["ApartamentNr"]),
-                    Id = id,
-                    Email = collection["Email"],
-                    UserName = collection["UserName"],
-                    Name = collection["Name"],
-                    LastName = collection["LastName"],
-                };
-                var result = await _userService.EditUser(vm);
-                
-                if (!result)
-                {
-                    throw new Exception("Problem with editing user");
-                }
-                
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var user = await _userManager.FindByIdAsync(model.User.Id);
+
+            if (user is null)
+                return NotFound();
+
+            await _userService.UpdateUser(model);
+
+
+            await _signInManager.RefreshSignInAsync(user);
+
+            return RedirectToAction("Index", "Offer");
         }
 
         // GET: AppUserController/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
+
             var user = await _userService.GetUser(id);
             return View(user);
         }

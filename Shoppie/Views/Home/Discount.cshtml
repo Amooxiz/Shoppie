@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Shoppie.ViewModels.OfferVM>
 
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "DiscountOffers";
 }
 
-<h1>Check the novelties in our store!</h1>
+<h1>DiscountOffers</h1>
 
 <h1>ItemCount: @ViewBag.cartCount</h1>
 <a asp-controller="Offer" asp-action="Index">AllOffers</a>
@@ -46,11 +47,11 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @if(item.Discount > 0)
+                    @if (item.Discount > 0)
                     {
                         <s>@item.Price</s>
                     }
-                    @($"{item.Price * 0.01 * (100 - item.Discount),0:F2}")
+                    @($"{item.Price * 0.01 * (100 - item.Discount), 0:F2}")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IsActive)
@@ -80,16 +81,3 @@
 </table>
 
 
-
-
-
-
-@*@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-*@

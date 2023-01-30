@@ -1,4 +1,5 @@
-﻿@model Shoppie.ViewModels.AppUserVM
+﻿@using Shoppie.RolesSeed;
+@model Shoppie.ViewModels.AppUserManagementModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,62 +13,66 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="User.Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="User.Name" class="control-label"></label>
+                <input asp-for="User.Name" class="form-control" />
+                <span asp-validation-for="User" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="User.LastName" class="control-label"></label>
+                <input asp-for="User.LastName" class="form-control" />
+                <span asp-validation-for="User.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label asp-for="User.UserName" class="control-label"></label>
+                <input asp-for="User.UserName" class="form-control" />
+                <span asp-validation-for="User.UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PersonalDicount" class="control-label"></label>
-                <input asp-for="PersonalDicount" class="form-control" />
-                <span asp-validation-for="PersonalDicount" class="text-danger"></span>
+                <label asp-for="User.PersonalDicount" class="control-label"></label>
+                <input asp-for="User.PersonalDicount" class="form-control" />
+                <span asp-validation-for="User.PersonalDicount" class="text-danger"></span>
             </div>
-            <br />
+            <h4>Address details</h4>
             <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+                <label asp-for="User.Country" class="control-label"></label>
+                <input asp-for="User.Country" class="form-control" />
+                <span asp-validation-for="User.Country" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
-                <span asp-validation-for="Street" class="text-danger"></span>
+                <label asp-for="User.City" class="control-label"></label>
+                <input asp-for="User.City" class="form-control" />
+                <span asp-validation-for="User.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PostalCode" class="control-label"></label>
-                <input asp-for="PostalCode" class="form-control" />
-                <span asp-validation-for="PostalCode" class="text-danger"></span>
+                <label asp-for="User.Street" class="control-label"></label>
+                <input asp-for="User.Street" class="form-control" />
+                <span asp-validation-for="User.Street" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BuildingNr" class="control-label"></label>
-                <input asp-for="BuildingNr" class="form-control" />
-                <span asp-validation-for="BuildingNr" class="text-danger"></span>
+                <label asp-for="User.PostalCode" class="control-label"></label>
+                <input asp-for="User.PostalCode" class="form-control" />
+                <span asp-validation-for="User.PostalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ApartamentNr" class="control-label"></label>
-                <input asp-for="ApartamentNr" class="form-control" />
-                <span asp-validation-for="ApartamentNr" class="text-danger"></span>
+                <label asp-for="User.BuildingNr" class="control-label"></label>
+                <input asp-for="User.BuildingNr" class="form-control" />
+                <span asp-validation-for="User.BuildingNr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.ApartamentNr" class="control-label"></label>
+                <input asp-for="User.ApartamentNr" class="form-control" />
+                <span asp-validation-for="User.ApartamentNr" class="text-danger"></span>
+            </div>
+            <div>
+                <select asp-items="@(Html.GetEnumSelectList<Roles>())" asp-for="SelectedRoleId" class="form-control"></select>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -76,7 +81,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Management">Back to List</a>
 </div>
 
 @section Scripts {

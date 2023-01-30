@@ -15,7 +15,7 @@ namespace Shoppie.DataAccess.Models
         public double Price { get; set; }
         public bool IsActive { get; set; }
         public bool IsFinished { get; set; }
-        [Range(0, 1)]
+        [Range(0, 100)]
         public double Discount { get; set; } = 0;
         public DateTime CreationDate { get; set; }
         public int CategoryId { get; set; }

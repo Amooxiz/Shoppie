@@ -11,6 +11,7 @@
         public string Description { get; set; }
 
         [Display(Name = "Price")]
+        [DisplayFormat(DataFormatString = "{0:#,##0.000#}", ApplyFormatInEditMode = true)]
         public double Price { get; set; }
 
         [Display(Name = "Is active")]
@@ -20,6 +21,7 @@
         public bool IsFinished { get; set; }
 
         [Display(Name = "Discount")]
+        [Range(0,100)]
         public double Discount { get; set; } = 0;
 
         [Display(Name = "Creation date")]
