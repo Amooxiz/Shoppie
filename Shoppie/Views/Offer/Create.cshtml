@@ -10,55 +10,48 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" class="form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+      
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+         
+          
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+       
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label asp-for="IsActive" class="form-check-label"></label>
-                <input class="form-check-input" asp-for="IsActive" /> 
-            </div>
-            <div class="form-group form-check">
-                <label asp-for="IsFinished" class="form-check-label"></label>
-                <input class="form-check-input" asp-for="IsFinished" />
-            </div>
-            <div class="form-group">
+          
                 <label asp-for="Discount" class="control-label"></label>
                 <input asp-for="Discount" class="form-control" />
                 <span asp-validation-for="Discount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+          
                 <label asp-for="CreationDate" class="control-label"></label>
                 <input asp-for="CreationDate" class="form-control" />
                 <span asp-validation-for="CreationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+         
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+            <div class="flex__container">
+
+                <label asp-for="IsActive" class="form-check-label"></label>
+            <input class="form-checkbox" asp-for="IsActive" />
+
+            <label asp-for="IsFinished" class="form-check-label"></label>
+            <input class="form-checkbox" asp-for="IsFinished" />
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
+            <input type="submit" value="Create" class="login-submit" />
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

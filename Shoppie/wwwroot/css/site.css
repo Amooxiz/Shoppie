@@ -97,6 +97,15 @@ body {
 #registerForm{
     width: 500px;
 }
+.flexible{
+    width: auto;
+    margin: 0 auto;
+    height: auto;
+}
+
+.center{
+    margin: 0 auto;
+}
 
 .header {
     font-size: 22px;
@@ -155,3 +164,90 @@ body {
     font-weight:700;
 }
 
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width:100%;
+}
+.newOffer {
+    background-color: #5A198C;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    margin: 0px 0px 0px auto;
+    height:  170px;
+    display:flex;
+    flex-flow: column;
+        
+}
+    .newOffer a {
+        margin-top: auto;
+        justify-self: flex-end;
+        text-decoration: none;
+    }
+.newOffer a:hover{
+    
+    color:black;
+}
+.styled-table thead tr {
+    background-color: #5A198C;
+    color: #ffffff;
+}
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        border: 2px solid black;
+
+    }
+    .styled-table a {
+        text-decoration: none;
+        color:black;
+        margin: 0 2.5px;
+        transition: 0.2s;
+    }
+    .styled-table a:hover{
+        font-weight: 700;
+    }
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+   
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3
+        }
+
+
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #5A198C  ;
+        }
+
+.form select {
+    background-color: #F2A2E6;
+    border: transparent;
+}
+    .form select option {
+        background-color: #F2A2E6;
+    }
+
+
+.detailsOfferCard  {
+    background-color: #5A198C;
+    padding: 20px;
+    width:500px;
+    border-radius: 20px;
+    font-size:25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    color:white;
+    font-weight: 700;
+}
+.detailsOfferCard h4 {
+    font-size: 35px;
+}
