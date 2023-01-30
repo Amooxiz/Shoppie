@@ -33,3 +33,25 @@ public static class CategoryModelExtensions
         });
     }
 }
+public static class AppUserExtensions
+{
+    public static IQueryable<AppUserVM> ToModel(this IQueryable<AppUser> source)
+    {
+        return source.Select(u => new AppUserVM
+        {
+            Id = u.Id,
+            Email = u.Email,
+            UserName = u.UserName,
+            Name = u.Name,
+            LastName = u.LastName,
+            PersonalDicount = u.PersonalDicount,
+            ApartamentNr = u.Address.ApartamentNr,
+            BuildingNr = u.Address.BuildingNr,
+            City = u.Address.City,
+            Country = u.Address.Country,
+            PostalCode = u.Address.PostalCode,
+            Street = u.Address.Street
+        });
+    
+    }
+}

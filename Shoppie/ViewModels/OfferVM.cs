@@ -11,6 +11,7 @@
         public string Description { get; set; }
 
         [Display(Name = "Price")]
+        [DisplayFormat(DataFormatString = "{0:#,##0.000#}", ApplyFormatInEditMode = true)]
         public double Price { get; set; }
 
         [Display(Name = "Is active")]
