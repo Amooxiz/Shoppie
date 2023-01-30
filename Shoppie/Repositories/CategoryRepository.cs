@@ -9,9 +9,28 @@ namespace Shoppie.Repositories
         {
             _context = context;
         }
+
+        public void DisableCategory(Category category)
+        {
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+        }
+
+        public void EnableCategory(Category category)
+        {
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+        }
+
         public IQueryable<Category> GetAllCategories()
         {
             return _context.Categories;
+        }
+
+        public Category GetCategory(int id)
+        {
+            var category = _context.Categories.SingleOrDefault(c => c.Id == id);
+            return category;
         }
     }
 }

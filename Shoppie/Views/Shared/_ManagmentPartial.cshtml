@@ -4,14 +4,12 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User) && User.IsInRole(Roles.Administrator.ToString()))
 {
     <li class="nav-item">
-            <a class="nav-link" asp-controller="Offer" asp-action="Management">Offers Control Panel</a>
+        <a class="nav-link" asp-controller="Offer" asp-action="Management">Offers Control Panel</a>
     </li>   
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Category" asp-action="Management">Offers Control Panel</a>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Category" asp-action="Management">Categories Control Panel</a>
     </li>
 }
-</ul>

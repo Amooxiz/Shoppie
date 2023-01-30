@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shoppie.Interfaces;
 using Shoppie.Services;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace Shoppie.Controllers
 {
@@ -15,15 +16,35 @@ namespace Shoppie.Controllers
             _categoryService = categoryService;
         }
 
-        public IActionResult Management()
+        public async Task<IActionResult> Management()
         {
-            return View();
+            var categories = await _categoryService.GetAllCategories();
+
+            return View(categories);
         }
 
-        [HttpPost]
-        public IActionResult Management(CategoryVM category)
+        public IActionResult Disable(int id)
         {
-            return View();
+            var category = _categoryService.GetCategory(id);
+
+            if(category is null)
+                return NotFound();
+            else
+                _categoryService.DisableCategory(category);
+
+            return RedirectToAction(nameof(Management));
+        }
+
+        public IActionResult Enable(int id)
+        {
+            var category = _categoryService.GetCategory(id);
+
+            if (category is null)
+                return NotFound();
+            else
+                _categoryService.EnableCategory(category);
+
+            return RedirectToAction(nameof(Management));
         }
     }
 }

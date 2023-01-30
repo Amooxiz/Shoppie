@@ -33,7 +33,7 @@ namespace Shoppie.Controllers
         // GET: Offer
         public async Task<IActionResult> Index()
         {
-            var offers = await _offerService.GetAllOffers();
+            var offers = await _offerService.GetAllActiveOffers();
             
             return  View(offers);
         }
@@ -156,7 +156,7 @@ namespace Shoppie.Controllers
             var offers = await _offerService.GetAllOffers();
             var categories = await _categoryService.GetAllCategories();
         
-            OfferManagementModel model = new OfferManagementModel
+            OfferManagementModel model = new()
             {
                 Offers = offers,
                 Categories = categories,
