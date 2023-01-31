@@ -44,7 +44,7 @@ public static class AppUserExtensions
             UserName = u.UserName,
             Name = u.Name,
             LastName = u.LastName,
-            PersonalDicount = u.PersonalDicount,
+            PersonalDicount = u.PersonalDicount.ToString(),
             ApartamentNr = u.Address.ApartamentNr,
             BuildingNr = u.Address.BuildingNr,
             City = u.Address.City,

@@ -9,6 +9,7 @@ using Shoppie.DataAccess;
 using Shoppie.DataAccess.Models;
 using Shoppie.Interfaces;
 using Shoppie.RolesSeed;
+using Shoppie.Services;
 using Shoppie.ViewModels;
 
 namespace Shoppie.Controllers
@@ -19,22 +20,45 @@ namespace Shoppie.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IPdfGenerator _generator;
         private readonly ApplicationDbContext _context;
+        private readonly ICookieService _cookieService;
+        private readonly INBPIntegratorService _nbpIntegratorService;
 
-
-        public OfferController(IOfferService offerService, ICategoryService categoryService, 
-            ApplicationDbContext context, IPdfGenerator generator)
+        public OfferController(IOfferService offerService, ICategoryService categoryService,
+            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, INBPIntegratorService nbpIntegratorService)
         {
             _offerService = offerService;
             _categoryService = categoryService;
             _context = context;
             _generator = generator;
+            _cookieService = cookieService;
+            _nbpIntegratorService = nbpIntegratorService;
         }
 
         // GET: Offer
         public async Task<IActionResult> Index()
         {
             var offers = await _offerService.GetAllActiveOffers();
-            
+
+            string? rateCookie = _cookieService.GetCookie("rate");
+            if (rateCookie is null)
+            {
+                rateCookie = "PLN";
+                _cookieService.SetCookie("rate", rateCookie);
+            }
+            else if (rateCookie != "PLN")
+            {
+                double rate = await _nbpIntegratorService.GetRate(rateCookie);
+                offers.ForEach(x => x.Price = x.Price * rate * (1.0 - x.Discount));
+            }
+            foreach (var offer in offers)
+            {
+                if (offer.Discount > 0)
+                {
+                    offer.Price = offer.Price * (1.0 - offer.Discount);
+                }
+            }
+            offers.ForEach(x => x.Price = Math.Round(x.Price, 2));
+
             return  View(offers);
         }
 
@@ -48,10 +72,23 @@ namespace Shoppie.Controllers
 
             var offer = _offerService.GetOffer(id);
 
+            string? rateCookie = _cookieService.GetCookie("rate");
+            if (rateCookie is null)
+            {
+                rateCookie = "PLN";
+                _cookieService.SetCookie("rate", rateCookie);
+            }
+            else if (rateCookie != "PLN")
+            {
+                double rate = _nbpIntegratorService.GetRate(rateCookie).Result;
+                offer.Price = offer.Price * rate * (1.0 - offer.Discount);
+            }
+
             if (offer is null)
             {
                 return NotFound();
             }
+            
 
             return View(offer);
         }
@@ -83,8 +120,9 @@ namespace Shoppie.Controllers
                 ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offer.CategoryId);
                 return View(offer);
             }
-                _offerService.AddOffer(offer);
-                return RedirectToAction(nameof(Index));
+            offer.CreationDate = DateTime.Now;
+            _offerService.AddOffer(offer);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Offer/Edit/5

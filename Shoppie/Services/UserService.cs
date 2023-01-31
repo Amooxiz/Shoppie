@@ -45,7 +45,7 @@ namespace Shoppie.Services
 
             AppUserVM vm = new AppUserVM()
             {
-                PersonalDicount = user.PersonalDicount,
+                PersonalDicount = user.PersonalDicount.ToString(),
                 Id = user.Id,
                 Street = user.Address.Street,
                 ApartamentNr = user.Address.ApartamentNr,
@@ -76,7 +76,7 @@ namespace Shoppie.Services
             user.Name = appUser.User.Name;
             user.LastName = appUser.User.LastName;
             user.Email = appUser.User.Email;
-            user.PersonalDicount = appUser.User.PersonalDicount;
+            user.PersonalDicount = Double.Parse(appUser.User.PersonalDicount);
 
             var isInRole = _userManager.IsInRoleAsync(user, ((Roles)appUser.SelectedRoleId).ToString()).Result;
             if (!isInRole)

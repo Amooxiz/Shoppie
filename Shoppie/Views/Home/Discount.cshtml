@@ -47,11 +47,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @if (item.Discount > 0)
-                    {
-                        <s>@item.Price</s>
-                    }
-                    @($"{item.Price * 0.01 * (100 - item.Discount), 0:F2}")
+                    @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IsActive)
