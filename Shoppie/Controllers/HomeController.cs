@@ -51,6 +51,12 @@ namespace Shoppie.Controllers
             return View(offers);
         }
 
+        public async Task<IActionResult> Cart()
+        {
+            var cart = _cookieService.GetCart();
+            return View(cart.Items);
+        }
+
         public IActionResult AddToCart(int id)
         {
             var offer = _offerService.GetOffer(id);
