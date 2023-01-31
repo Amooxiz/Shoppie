@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,9 +23,10 @@ namespace Shoppie.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ICookieService _cookieService;
         private readonly INBPIntegratorService _nbpIntegratorService;
+        private readonly UserManager<AppUser> _userManager;
 
         public OfferController(IOfferService offerService, ICategoryService categoryService,
-            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, INBPIntegratorService nbpIntegratorService)
+            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, INBPIntegratorService nbpIntegratorService, UserManager<AppUser> userManager)
         {
             _offerService = offerService;
             _categoryService = categoryService;
@@ -32,6 +34,7 @@ namespace Shoppie.Controllers
             _generator = generator;
             _cookieService = cookieService;
             _nbpIntegratorService = nbpIntegratorService;
+            _userManager = userManager;
         }
 
         // GET: Offer
@@ -123,6 +126,43 @@ namespace Shoppie.Controllers
             offer.CreationDate = DateTime.Now;
             _offerService.AddOffer(offer);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult AddToCart(int id)
+        {
+            var offer = _offerService.GetOffer(id);
+            var user = _userManager.GetUserAsync(User).Result;
+
+            if (user is null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
+            string? rateCookie = _cookieService.GetCookie("rate");
+            if (rateCookie is null)
+            {
+                rateCookie = "PLN";
+                _cookieService.SetCookie("rate", rateCookie);
+            }
+            else if (rateCookie != "PLN")
+            {
+                double rate = _nbpIntegratorService.GetRate(rateCookie).Result;
+                offer.Price = offer.Price * rate;
+            }
+            if (offer.Discount > 0)
+            {
+                offer.Price = offer.Price * (1.0 - offer.Discount);
+            }
+            offer.Price = Math.Round(offer.Price, 2);
+
+            if (user.PersonalDicount > 0)
+            {
+                offer.Price = offer.Price * (1.0 - user.PersonalDicount);
+            }
+
+            _cookieService.AddItemToCart(offer);
+
+            return RedirectToAction("Index");
         }
 
         // GET: Offer/Edit/5
