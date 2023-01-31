@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using iText.Layout.Renderer;
+using Newtonsoft.Json;
 using Shoppie.DataAccess.Models;
 using Shoppie.Interfaces;
 using Shoppie.SupportModels;
@@ -51,7 +52,7 @@ namespace Shoppie.Controllers
             return View(offers);
         }
 
-        public async Task<IActionResult> Cart()
+        public IActionResult Cart()
         {
             var cart = _cookieService.GetCart();
             return View(cart.Items);
