@@ -82,7 +82,7 @@ body {
         margin: 0 2px;
     }
     .header nav ul li a {
-        font-size: 18px;
+        font-size: 16px;
         color:white;
         text-decoration: none;
     }
@@ -250,4 +250,7 @@ body {
 }
 .detailsOfferCard h4 {
     font-size: 35px;
+}
+#curr{
+    display: none;
 }
