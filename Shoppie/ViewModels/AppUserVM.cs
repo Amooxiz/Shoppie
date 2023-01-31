@@ -23,8 +23,7 @@
         public string Email { get; set; }
 
         [Display(Name = "Personal discount")]
-        [Range(0,100)]
-        public double PersonalDicount { get; set; }
+        public string PersonalDicount { get; set; }
 
         [Display(Name = "Postal code")]
         public string PostalCode { get; set; }
