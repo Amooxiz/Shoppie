@@ -51,9 +51,8 @@
                         Street = "not specified"
                     }
                 };
-
-                user.EmailConfirmed = true;
                 
+
                 var result = userManager.CreateAsync(user, "Password123.").Result;
 
                 if (result.Succeeded)
@@ -61,7 +60,7 @@
                     userManager.AddToRoleAsync(user, Roles.Administrator.ToString()).Wait();
                     var token = userManager.GenerateEmailConfirmationTokenAsync(user);
                     userManager.ConfirmEmailAsync(user, token.Result);
-                    
+                    user.EmailConfirmed = true;
                 }
             }
         }

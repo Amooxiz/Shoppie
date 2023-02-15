@@ -11,6 +11,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+
+    options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US")
+);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
@@ -34,6 +39,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRequestLocalization();
 
 var scopeFactory = app.Services.GetRequiredService<IServiceProvider>();
 using (var scope = scopeFactory.CreateScope())
