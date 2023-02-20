@@ -35,9 +35,11 @@ namespace Shoppie.Services
 
         public CartProduct MapOfferToCartProduct(OfferVM offer)
         {
-            CartProduct cartProduct = new CartProduct();
-            cartProduct.Title = offer.Title;
-            cartProduct.Price = offer.Price;
+            CartProduct cartProduct = new()
+            {
+                Title = offer.Title,
+                Price = offer.Price
+            };
             return cartProduct;
         }
 

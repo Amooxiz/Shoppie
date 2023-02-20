@@ -19,6 +19,7 @@ namespace Shoppie.DataAccess.Models
         public string PostalCode { get; set; }
         
         [Display(Name = "Building Number")]
+        [RegularExpression(@"^[a-zA-Z]+(([',.\- ][a-zA-Z ])?[a-zA-Z]*)*$", ErrorMessage = "The last name must contain only Latin letters and special characters")]
         public string BuildingNr { get; set; }
         [Display(Name = "Apartment Number - Optional")]
         public int? ApartamentNr { get; set; }
