@@ -87,6 +87,7 @@ namespace Shoppie.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name= "First Name")]            
+            [RegularExpression(@"^[a-zA-Z]+(([',.\- ][a-zA-Z ])?[a-zA-Z]*)*$", ErrorMessage = "The name must contain only Latin letters and special characters")]
             public string Name { get; set; }
 
             [Required]
