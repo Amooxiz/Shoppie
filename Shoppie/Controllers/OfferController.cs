@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Shoppie.Business.Generators.Interfaces;
+using Shoppie.Business.Services.Interfaces;
+using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess;
-using Shoppie.DataAccess.Models;
-using Shoppie.Interfaces;
-using Shoppie.RolesSeed;
-using Shoppie.Services;
-using Shoppie.ViewModels;
+using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Controllers
 {

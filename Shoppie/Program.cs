@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shoppie;
-using Shoppie.RolesSeed;
+using Shoppie.Business.Seeders;
+using Shoppie.DataAccess;
+using Shoppie.DataAccess.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

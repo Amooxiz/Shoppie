@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Shoppie.Interfaces;
-using Shoppie.RolesSeed;
-using Shoppie.ViewModels;
+﻿using Shoppie.Business.Services.Interfaces;
+using Shoppie.Business.ViewModels;
+using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Controllers
 {

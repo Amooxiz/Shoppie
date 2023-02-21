@@ -1,7 +1,9 @@
-﻿using Shoppie.Interfaces;
-using Shoppie.Generators;
-using Shoppie.Repositories;
-using Shoppie.Services;
+﻿using Shoppie.DataAccess.Repositories;
+using Shoppie.DataAccess.Repositories.Interfaces;
+using Shoppie.Business.Services.Interfaces;
+using Shoppie.Business.Generators.Interfaces;
+using Shoppie.Business.Services;
+using Shoppie.Business.Generators;
 
 namespace Shoppie
 {

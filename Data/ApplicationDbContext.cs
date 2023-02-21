@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Shoppie.DataAccess.Models;
+using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.DataAccess;
 

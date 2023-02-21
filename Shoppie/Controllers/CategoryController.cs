@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shoppie.Interfaces;
-using Shoppie.Services;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+﻿using Shoppie.Business.Services.Interfaces;
 
 namespace Shoppie.Controllers
 {

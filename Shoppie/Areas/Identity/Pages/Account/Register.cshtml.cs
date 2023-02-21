@@ -2,9 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using Microsoft.AspNetCore.Identity;
-using Shoppie.DataAccess;
-using Shoppie.RolesSeed;
+using Shoppie.Business.Seeders.Enums;
+using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Areas.Identity.Pages.Account
 {

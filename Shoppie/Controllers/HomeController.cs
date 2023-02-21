@@ -1,9 +1,6 @@
-﻿using iText.Layout.Renderer;
-using Newtonsoft.Json;
-using Shoppie.DataAccess.Models;
-using Shoppie.Interfaces;
-using Shoppie.SupportModels;
-using Shoppie.ViewModels;
+﻿using Shoppie.Business.Services.Interfaces;
+using Shoppie.Business.ViewModels;
+using Shoppie.DataAccess.Entities;
 using System.Diagnostics;
 
 namespace Shoppie.Controllers
