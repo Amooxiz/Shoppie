@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Shoppie;
 using Shoppie.Business.Seeders;
 using Shoppie.DataAccess;
 using Shoppie.DataAccess.Entities;
+using Shoppie.DIContainters;
 
 var builder = WebApplication.CreateBuilder(args);
 

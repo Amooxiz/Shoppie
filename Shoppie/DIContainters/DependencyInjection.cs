@@ -5,7 +5,7 @@ using Shoppie.Business.Generators.Interfaces;
 using Shoppie.Business.Services;
 using Shoppie.Business.Generators;
 
-namespace Shoppie
+namespace Shoppie.DIContainters
 {
     public static class DependencyInjection
     {
@@ -20,6 +20,7 @@ namespace Shoppie
             services.AddTransient<IPdfGenerator, PdfGenerator>();
             services.AddTransient<INBPIntegratorService, NBPIntegratorService>();
             services.AddTransient<ICookieService, CookieService>();
+
             return services;
         }
     }
