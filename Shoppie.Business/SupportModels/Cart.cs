@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Shoppie.SupportModels
+namespace Shoppie.Business.SupportModels
 {
     public class Cart
     {
@@ -9,27 +9,27 @@ namespace Shoppie.SupportModels
 
         public Cart()
         {
-            
+
         }
-        
+
         public Cart(string? jsonCart)
         {
             if (jsonCart is not null)
             {
                 Cart cart = JsonConvert.DeserializeObject<Cart>(jsonCart);
-                this.ItemCount = cart.ItemCount;
-                this.Items = cart.Items;
+                ItemCount = cart.ItemCount;
+                Items = cart.Items;
             }
             else
             {
-                this.ItemCount = 0;
-                this.Items = new List<CartProduct>();
+                ItemCount = 0;
+                Items = new List<CartProduct>();
             }
         }
-        
+
         private int GetNextNr()
         {
-            return this.ItemCount + 1;
+            return ItemCount + 1;
         }
 
         private void ChangeNr(int Nr)
@@ -42,7 +42,7 @@ namespace Shoppie.SupportModels
 
         public void AddItem(CartProduct cartProduct)
         {
-            cartProduct.Nr = this.GetNextNr();
+            cartProduct.Nr = GetNextNr();
             Items.Add(cartProduct);
             ItemCount++;
         }

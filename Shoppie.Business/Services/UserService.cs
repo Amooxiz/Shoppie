@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shoppie.Business.Extensions.VM;
 using Shoppie.Business.Seeders.Enums;
 using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess.Entities;
 using Shoppie.DataAccess.Repositories.Interfaces;
-using Shoppie.Extensions;
 
 namespace Shoppie.Business.Services
 {
@@ -47,7 +47,7 @@ namespace Shoppie.Business.Services
         {
             var user = await _userRepository.GetUser(id);
 
-            AppUserVM vm = new AppUserVM()
+            AppUserVM vm = new()
             {
                 PersonalDicount = user.PersonalDicount.ToString(),
                 Id = user.Id,

@@ -1,4 +1,4 @@
-﻿namespace Shoppie.SupportModels
+﻿namespace Shoppie.Business.SupportModels
 {
     public class NBPConvertModel
     {

@@ -58,36 +58,7 @@ namespace Shoppie.Controllers
         public IActionResult AddToCart(int id)
         {
             var offer = _offerService.GetOffer(id);
-            var user = _userManager.GetUserAsync(User).Result;
-
-            if (user is null)
-            {
-                return Redirect("/Identity/Account/Login");
-            }
-
-            string? rateCookie = _cookieService.GetCookie("rate");
-            if (rateCookie is null)
-            {
-                rateCookie = "PLN";
-                _cookieService.SetCookie("rate", rateCookie);
-            }
-            else if (rateCookie != "PLN")
-            {
-                double rate = _nbpIntegratorService.GetRate(rateCookie).Result;
-                offer.Price *= rate;
-            }
-            if (offer.Discount > 0)
-            {
-                offer.Price *= (1.0 - offer.Discount);
-            }
-            offer.Price = Math.Round(offer.Price, 2);
-
-            if (user.PersonalDicount > 0)
-            {
-                offer.Price *= (1.0 - user.PersonalDicount);
-            }
-
-            _cookieService.AddItemToCart(offer);
+            _cookieService.SetCookie("xd", "a");
 
             return RedirectToAction("Index");
         }

@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Shoppie.Business.Seeders;
 using Shoppie.DataAccess;
 using Shoppie.DataAccess.Entities;
-using Shoppie.DIContainters;
+using Shoppie.Extensions.DIContainters;
+using Shoppie.Extensions.Seeders;
+using Shoppie.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,13 +49,9 @@ app.UseSession();
 
 app.UseRequestLocalization();
 
-var scopeFactory = app.Services.GetRequiredService<IServiceProvider>();
-using (var scope = scopeFactory.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-    DataSeeder.Seed(userManager, roleManager);
-}
+app.SeedDatabase();
+app.UseWhen(context => context.User?.Identity?.IsAuthenticated is false, a => a.UseMiddleware<AssignCookieMiddleware>());
+
 
 app.MapControllerRoute(
     name: "default",
