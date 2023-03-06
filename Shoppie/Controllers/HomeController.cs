@@ -2,6 +2,7 @@
 using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess.Entities;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace Shoppie.Controllers
 {
@@ -49,6 +50,7 @@ namespace Shoppie.Controllers
             return View(offers);
         }
 
+        [Authorize(Policy = "UserId")]
         public IActionResult Cart()
         {
             var cart = _cookieService.GetCart();

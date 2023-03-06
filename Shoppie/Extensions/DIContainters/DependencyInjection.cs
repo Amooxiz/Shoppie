@@ -6,6 +6,7 @@ using Shoppie.Business.Services;
 using Shoppie.Business.Generators;
 using Shoppie.Business.Seeders;
 using Shoppie.DataAccess.Entities;
+using Shoppie.Business.Authorization.Handlers;
 
 namespace Shoppie.Extensions.DIContainters
 {
@@ -22,6 +23,7 @@ namespace Shoppie.Extensions.DIContainters
             services.AddTransient<IPdfGenerator, PdfGenerator>();
             services.AddTransient<INBPIntegratorService, NBPIntegratorService>();
             services.AddTransient<ICookieService, CookieService>();
+            services.AddTransient<IAuthorizationHandler, GuidCookieHandler>();
 
             return services;
         }

@@ -13,10 +13,10 @@ namespace Shoppie.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-           /* if (context.Request.Cookies["UserId"] is null)
+            if (context.Request.Cookies["UserId"] is null)
             {
                 context.Response.Cookies.Append("UserId", Guid.NewGuid().ToString());
-            }    */        
+            }
             await _next(context);
         }
 

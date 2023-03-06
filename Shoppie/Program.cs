@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Shoppie.Business.Authorization.Requirements;
 using Shoppie.DataAccess;
 using Shoppie.DataAccess.Entities;
 using Shoppie.Extensions.DIContainters;
@@ -17,10 +18,18 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
     options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US")
 );
+builder.Services.AddControllersWithViews();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UserId", policy =>
+    {
+        policy.Requirements.Add(new GuidCookieRequired());
+    });
+});
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
