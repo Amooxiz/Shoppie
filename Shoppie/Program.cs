@@ -23,14 +23,6 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("UserId", policy =>
-    {
-        policy.Requirements.Add(new GuidCookieRequired());
-    });
-});
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 

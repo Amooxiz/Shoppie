@@ -50,9 +50,13 @@ namespace Shoppie.Controllers
             return View(offers);
         }
 
-        [Authorize(Policy = "UserId")]
         public IActionResult Cart()
         {
+            if (HttpContext.Request.Cookies["UserId"] is null || !User.Identity.IsAuthenticated)
+            {
+                RedirectToAction("Index");
+            } 
+
             var cart = _cookieService.GetCart();
             return View(cart.Items);
         }
