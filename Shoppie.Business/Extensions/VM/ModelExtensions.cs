@@ -2,7 +2,7 @@
 using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Business.Extensions.VM;
-public static class OfferModelExtensions
+public static class ModelExtensions
 {
     public static IQueryable<OfferVM> ToModel(this IQueryable<Offer> source)
     {
