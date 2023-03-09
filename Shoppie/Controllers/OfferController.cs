@@ -29,14 +29,6 @@ namespace Shoppie.Controllers
             _userManager = userManager;
         }
 
-        // GET: Offer
-        public async Task<IActionResult> Index()
-        {
-            var offers = await _offerService.GetAllActiveOffers();
-
-            return  View(offers);
-        }
-
         // GET: Offer/Details/5
         public IActionResult Details(int? id)
         {

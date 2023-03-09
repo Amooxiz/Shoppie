@@ -24,9 +24,17 @@ namespace Shoppie.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> New()
         {
             var offers = await _offerService.GetNewOffers(3);
+
+            return View(offers);
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var offers = await _offerService.GetAllActiveOffers();
+
             return View(offers);
         }
 
@@ -38,6 +46,7 @@ namespace Shoppie.Controllers
             } 
 
             var cart = _cookieService.GetCart();
+
             return View(cart.Items);
         }
 
@@ -54,6 +63,7 @@ namespace Shoppie.Controllers
         public async Task<IActionResult> Discount()
         {
             var offers = await _offerService.GetDiscountedOffers();
+            
             foreach (var offer in offers)
             {
                 if (offer.Discount > 0)
@@ -65,7 +75,6 @@ namespace Shoppie.Controllers
 
 
             return View(offers);
-            //return RedirectToAction("Discount", "Offer"); Po zrobieniu metody Discount w offerControlerze mozna to odkomentowac
         }
 
         public IActionResult Privacy()
