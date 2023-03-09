@@ -44,7 +44,7 @@ namespace Shoppie.Business.Seeders
                     Email = "admin@admin.com",
                     LastName = "admin",
                     Name = "admin",
-                    isAdmin = true,
+                    IsAdmin = true,
                     Address = new Address
                     {
                         ApartamentNr = 0,

@@ -32,12 +32,12 @@ namespace Shoppie.DataAccess.Repositories
 
         public IQueryable<AppUser> GetUsers()
         {
-            return _context.Users.Where(u => u.isAdmin == false);
+            return _context.Users.Where(u => u.IsAdmin == false);
         }
 
         public async Task<AppUser> GetUser(string id)
         {
-            return await _context.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id && u.isAdmin == false);
+            return await _context.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id && u.IsAdmin == false);
         }
 
         public async Task UpdateUser(AppUser appUser)

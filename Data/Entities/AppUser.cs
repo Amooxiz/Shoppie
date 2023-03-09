@@ -11,5 +11,5 @@ public class AppUser : IdentityUser
     public string Name { get; set; }
     public string LastName { get; set; }
     public Address Address { get; set; }
-    public bool isAdmin { get; set; }
+    public bool IsAdmin { get; set; }
 }
