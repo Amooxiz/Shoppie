@@ -17,9 +17,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
     options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US")
 );
-builder.Services.AddControllersWithViews();
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDistributedMemoryCache();
