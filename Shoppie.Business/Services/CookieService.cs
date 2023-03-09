@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Shoppie.Business.Services.Interfaces;
+using Shoppie.Business.SupportModels;
 using Shoppie.Business.ViewModels;
-using Shoppie.SupportModels;
 
 namespace Shoppie.Business.Services
 {

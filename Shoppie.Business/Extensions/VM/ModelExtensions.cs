@@ -1,8 +1,8 @@
 ﻿using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess.Entities;
 
-namespace Shoppie.Extensions;
-public static class OfferModelExtensions
+namespace Shoppie.Business.Extensions.VM;
+public static class ModelExtensions
 {
     public static IQueryable<OfferVM> ToModel(this IQueryable<Offer> source)
     {
@@ -53,6 +53,6 @@ public static class AppUserExtensions
             PostalCode = u.Address.PostalCode,
             Street = u.Address.Street
         });
-    
+
     }
 }

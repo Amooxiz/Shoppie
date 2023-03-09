@@ -1,7 +1,7 @@
 ﻿using Azure;
 using Newtonsoft.Json;
 using Shoppie.Business.Services.Interfaces;
-using Shoppie.SupportModels;
+using Shoppie.Business.SupportModels;
 using System.Net.Http;
 
 namespace Shoppie.Business.Services

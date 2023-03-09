@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shoppie.Business.Extensions.VM;
 using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess.Entities;
 using Shoppie.DataAccess.Repositories.Interfaces;
-using Shoppie.Extensions;
 
 namespace Shoppie.Business.Services
 {

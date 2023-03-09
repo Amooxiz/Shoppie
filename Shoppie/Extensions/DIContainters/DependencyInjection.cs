@@ -4,8 +4,10 @@ using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.Generators.Interfaces;
 using Shoppie.Business.Services;
 using Shoppie.Business.Generators;
+using Shoppie.Business.Seeders;
+using Shoppie.DataAccess.Entities;
 
-namespace Shoppie
+namespace Shoppie.Extensions.DIContainters
 {
     public static class DependencyInjection
     {

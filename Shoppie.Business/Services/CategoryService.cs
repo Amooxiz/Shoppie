@@ -3,8 +3,7 @@ using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess.Entities;
 using Shoppie.DataAccess.Repositories.Interfaces;
-using Shoppie.Extensions;
-using System.Runtime.CompilerServices;
+using Shoppie.Business.Extensions.VM;
 
 namespace Shoppie.Business.Services
 {

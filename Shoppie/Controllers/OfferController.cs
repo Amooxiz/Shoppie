@@ -34,26 +34,6 @@ namespace Shoppie.Controllers
         {
             var offers = await _offerService.GetAllActiveOffers();
 
-            string? rateCookie = _cookieService.GetCookie("rate");
-            if (rateCookie is null)
-            {
-                rateCookie = "PLN";
-                _cookieService.SetCookie("rate", rateCookie);
-            }
-            else if (rateCookie != "PLN")
-            {
-                double rate = await _nbpIntegratorService.GetRate(rateCookie);
-                offers.ForEach(x => x.Price = x.Price * rate * (1.0 - x.Discount));
-            }
-            foreach (var offer in offers)
-            {
-                if (offer.Discount > 0)
-                {
-                    offer.Price = offer.Price * (1.0 - offer.Discount);
-                }
-            }
-            offers.ForEach(x => x.Price = Math.Round(x.Price, 2));
-
             return  View(offers);
         }
 
@@ -66,18 +46,6 @@ namespace Shoppie.Controllers
             }
 
             var offer = _offerService.GetOffer(id);
-
-            string? rateCookie = _cookieService.GetCookie("rate");
-            if (rateCookie is null)
-            {
-                rateCookie = "PLN";
-                _cookieService.SetCookie("rate", rateCookie);
-            }
-            else if (rateCookie != "PLN")
-            {
-                double rate = _nbpIntegratorService.GetRate(rateCookie).Result;
-                offer.Price = offer.Price * rate * (1.0 - offer.Discount);
-            }
 
             if (offer is null)
             {
@@ -115,45 +83,15 @@ namespace Shoppie.Controllers
                 ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offer.CategoryId);
                 return View(offer);
             }
+            
             offer.CreationDate = DateTime.Now;
             _offerService.AddOffer(offer);
+
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult AddToCart(int id)
         {
-            var offer = _offerService.GetOffer(id);
-            var user = _userManager.GetUserAsync(User).Result;
-
-            if (user is null)
-            {
-                return Redirect("/Identity/Account/Login");
-            }
-
-            string? rateCookie = _cookieService.GetCookie("rate");
-            if (rateCookie is null)
-            {
-                rateCookie = "PLN";
-                _cookieService.SetCookie("rate", rateCookie);
-            }
-            else if (rateCookie != "PLN")
-            {
-                double rate = _nbpIntegratorService.GetRate(rateCookie).Result;
-                offer.Price = offer.Price * rate;
-            }
-            if (offer.Discount > 0)
-            {
-                offer.Price = offer.Price * (1.0 - offer.Discount);
-            }
-            offer.Price = Math.Round(offer.Price, 2);
-
-            if (user.PersonalDicount > 0)
-            {
-                offer.Price = offer.Price * (1.0 - user.PersonalDicount);
-            }
-
-            _cookieService.AddItemToCart(offer);
-
             return RedirectToAction("Index");
         }
 

@@ -1,5 +1,5 @@
-﻿using Shoppie.Business.ViewModels;
-using Shoppie.SupportModels;
+﻿using Shoppie.Business.SupportModels;
+using Shoppie.Business.ViewModels;
 
 namespace Shoppie.Business.Services.Interfaces
 {
