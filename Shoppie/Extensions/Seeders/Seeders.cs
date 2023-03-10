@@ -5,7 +5,7 @@ namespace Shoppie.Extensions.Seeders
 {
     public static class Seeder
     {
-        public static void SeedDatabase(this WebApplication webApplication)
+        public static async Task SeedDatabase(this WebApplication webApplication)
         {
             var scopeFactory = webApplication.Services.GetRequiredService<IServiceProvider>();
 
@@ -13,7 +13,7 @@ namespace Shoppie.Extensions.Seeders
 
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-            DataSeeder.Seed(userManager, roleManager);
+            await DataSeeder.Seed(userManager, roleManager);
         }
     }
 }

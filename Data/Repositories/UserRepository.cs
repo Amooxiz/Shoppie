@@ -31,7 +31,7 @@ namespace Shoppie.DataAccess.Repositories
         }
 
         public IQueryable<AppUser> GetUsers()
-        {
+        { 
             return _context.Users.Where(u => u.IsAdmin == false);
         }
 

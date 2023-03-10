@@ -18,7 +18,8 @@ namespace Shoppie.Controllers
         private readonly UserManager<AppUser> _userManager;
 
         public OfferController(IOfferService offerService, ICategoryService categoryService,
-            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, INBPIntegratorService nbpIntegratorService, UserManager<AppUser> userManager)
+            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, 
+            INBPIntegratorService nbpIntegratorService, UserManager<AppUser> userManager)
         {
             _offerService = offerService;
             _categoryService = categoryService;
