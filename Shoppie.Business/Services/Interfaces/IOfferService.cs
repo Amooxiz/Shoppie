@@ -11,9 +11,9 @@ namespace Shoppie.Business.Services.Interfaces
         Task<List<OfferVM>> GetDiscountedOffers();
         Task<List<OfferVM>> GetAllActiveOffers();
         /*        Task<List<OfferVM>> GetUsersOffers(string userId);*/
-        OfferVM GetOffer(int? id);
-        void AddOffer(Offer offer);
-        void UpdateOffer(OfferVM offer);
-        void DeleteOffer(int id);
+        Task<OfferVM> GetOffer(int? id);
+        Task AddOffer(Offer offer);
+        Task UpdateOffer(OfferVM offer);
+        Task DeleteOffer(int id);
     }
 }

@@ -19,7 +19,7 @@ namespace Shoppie.DataAccess.Entities
         public string PostalCode { get; set; }
 
         [Display(Name = "Building Number")]
-        [RegularExpression(@"^[a-zA-Z]+(([',.\- ][a-zA-Z ])?[a-zA-Z]*)*$", ErrorMessage = "The last name must contain only Latin letters and special characters")]
+        [RegularExpression(@"^([1-9]{1,6}[a-zA-Z]{0,2})$", ErrorMessage = "Please provide a valid building number e.g., 13, 15a")]
         public string BuildingNr { get; set; }
         [Display(Name = "Apartment Number - Optional")]
         public int? ApartamentNr { get; set; }

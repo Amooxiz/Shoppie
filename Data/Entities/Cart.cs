@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shoppie.DataAccess.Entities
 {
-    [PrimaryKey($"{nameof(CartId)}", $"{nameof(AnnoynymousCartOwnerId)}", $"{nameof(AuthenticatedCartOwnerId)}")]
     public class Cart
     {
         public int CartId { get; set; }
@@ -15,7 +14,8 @@ namespace Shoppie.DataAccess.Entities
         public AppUser AuthenticatedCartOwner { get; set; }
         
         public bool IsFinished { get; set; }
-        
+        public DateTime? FinishDate { get; set; }
+
         public DateTime CreationDate { get; set; }
         
         public ICollection<CartItem> Items { get; set; }

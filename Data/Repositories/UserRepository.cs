@@ -48,8 +48,14 @@ namespace Shoppie.DataAccess.Repositories
         public async Task<bool> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if (user == null) return false;
+            
+            if (user == null)
+            {
+                return false;
+            }
+            
             var result = await _userManager.DeleteAsync(user);
+            
             return result.Succeeded;
         }
     }

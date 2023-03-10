@@ -20,26 +20,26 @@ namespace Shoppie.Controllers
             return View(categories);
         }
 
-        public IActionResult Disable(int id)
+        public async Task<IActionResult> Disable(int id)
         {
-            var category = _categoryService.GetCategory(id);
+            var category = await _categoryService.GetCategory(id);
 
             if(category is null)
                 return NotFound();
             else
-                _categoryService.DisableCategory(category);
+                await _categoryService.DisableCategory(category);
 
             return RedirectToAction(nameof(Management));
         }
 
-        public IActionResult Enable(int id)
+        public async Task<IActionResult> Enable(int id)
         {
-            var category = _categoryService.GetCategory(id);
+            var category = await _categoryService.GetCategory(id);
 
             if (category is null)
                 return NotFound();
             else
-                _categoryService.EnableCategory(category);
+                await _categoryService.EnableCategory(category);
 
             return RedirectToAction(nameof(Management));
         }

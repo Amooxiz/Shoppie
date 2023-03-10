@@ -87,7 +87,7 @@ namespace Shoppie.Controllers
                 var result = await _userService.DeleteUser(id);
                 if (!result)
                 {
-                    throw new Exception("Problem with deleting user");
+                    throw new InvalidOperationException("Problem with deleting user");
                 }
                 return RedirectToAction(nameof(Index));
             }

@@ -6,9 +6,9 @@ namespace Shoppie.Business.Services.Interfaces
     public interface ICategoryService
     {
         Task<List<CategoryVM>> GetAllCategories();
-        void DisableCategory(Category category);
-        void EnableCategory(Category category);
-        Category GetCategory(int id);
+        Task DisableCategory(Category category);
+        Task EnableCategory(Category category);
+        Task<Category> GetCategory(int id);
 
     }
 }

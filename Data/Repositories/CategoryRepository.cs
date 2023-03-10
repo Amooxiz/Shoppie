@@ -1,4 +1,5 @@
-﻿using Shoppie.DataAccess.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shoppie.DataAccess.Entities;
 using Shoppie.DataAccess.Repositories.Interfaces;
 
 namespace Shoppie.DataAccess.Repositories
@@ -11,16 +12,16 @@ namespace Shoppie.DataAccess.Repositories
             _context = context;
         }
 
-        public void DisableCategory(Category category)
+        public async Task DisableCategory(Category category)
         {
             _context.Categories.Update(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void EnableCategory(Category category)
+        public async Task EnableCategory(Category category)
         {
             _context.Categories.Update(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public IQueryable<Category> GetAllCategories()
@@ -28,9 +29,9 @@ namespace Shoppie.DataAccess.Repositories
             return _context.Categories;
         }
 
-        public Category GetCategory(int id)
+        public async Task<Category> GetCategory(int id)
         {
-            var category = _context.Categories.SingleOrDefault(c => c.Id == id);
+            var category = await _context.Categories.SingleOrDefaultAsync(c => c.Id == id);
             return category;
         }
     }

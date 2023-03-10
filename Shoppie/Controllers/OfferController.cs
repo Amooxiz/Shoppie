@@ -31,14 +31,14 @@ namespace Shoppie.Controllers
         }
 
         // GET: Offer/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var offer = _offerService.GetOffer(id);
+            var offer = await _offerService.GetOffer(id);
 
             if (offer is null)
             {
@@ -78,7 +78,7 @@ namespace Shoppie.Controllers
             }
             
             offer.CreationDate = DateTime.Now;
-            _offerService.AddOffer(offer);
+            await _offerService.AddOffer(offer);
 
             return RedirectToAction(nameof(Index));
         }
@@ -97,7 +97,7 @@ namespace Shoppie.Controllers
                 return NotFound();
             }
 
-            var offer = _offerService.GetOffer(id);
+            var offer = await _offerService.GetOffer(id);
 
             if (offer is null)
             {
@@ -123,7 +123,7 @@ namespace Shoppie.Controllers
 
             if (ModelState.IsValid)
             {
-                _offerService.UpdateOffer(offer);
+                await _offerService.UpdateOffer(offer);
                 return View(offer);
             }
     
@@ -137,7 +137,7 @@ namespace Shoppie.Controllers
             if (id is null)
                 return NotFound();
 
-            var offer = _offerService.GetOffer(id);
+            var offer = await _offerService.GetOffer(id);
 
             return offer is null ? NotFound() : View(offer);
         }
@@ -148,8 +148,8 @@ namespace Shoppie.Controllers
         [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _offerService.DeleteOffer(id);
-            return RedirectToAction(nameof(Index));
+            await _offerService.DeleteOffer(id);
+            return RedirectToAction("Index", "Home");
         }
 
        [Authorize(Roles = $"Administrator")]

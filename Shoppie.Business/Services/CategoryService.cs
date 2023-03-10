@@ -15,11 +15,11 @@ namespace Shoppie.Business.Services
             _categoryRepository = categoryRepository;
         }
 
-        public void DisableCategory(Category category)
+        public async Task DisableCategory(Category category)
         {
             category.IsActive = false;
 
-            _categoryRepository.DisableCategory(category);
+            await _categoryRepository.DisableCategory(category);
         }
 
 
@@ -30,18 +30,18 @@ namespace Shoppie.Business.Services
             return categories;
         }
 
-        public Category GetCategory(int id)
+        public async Task<Category> GetCategory(int id)
         {
-            var category = _categoryRepository.GetCategory(id);
+            var category = await _categoryRepository.GetCategory(id);
 
             return category;
         }
 
-        public void EnableCategory(Category category)
+        public async Task EnableCategory(Category category)
         {
             category.IsActive = true;
 
-            _categoryRepository.EnableCategory(category);
+            await _categoryRepository.EnableCategory(category);
         }
     }
 }
