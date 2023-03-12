@@ -22,6 +22,7 @@ namespace Shoppie.Extensions.DIContainters
             services.AddTransient<IPdfGenerator, PdfGenerator>();
             services.AddTransient<INBPIntegratorService, NBPIntegratorService>();
             services.AddTransient<ICookieService, CookieService>();
+            services.AddTransient<ICartRepository, CartRepository>();
             services.AddScoped<ICartManager, CartManager>();
             return services;
         }
