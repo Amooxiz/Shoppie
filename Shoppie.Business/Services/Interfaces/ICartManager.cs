@@ -9,7 +9,7 @@ namespace Shoppie.Business.Services.Interfaces
 {
     public interface ICartManager
     {
-        public Task AddToCart(int offerId);
-        public Task RemoveFromCart();
+        public Task AddToCartAsync(int offerId);
+        public Task RemoveFromCartAsync();
     }
 }

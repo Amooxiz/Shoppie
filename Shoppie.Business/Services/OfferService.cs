@@ -17,14 +17,14 @@ namespace Shoppie.Business.Services
             _categoryRepository = categoryRepostiory;
         }
 
-        public async Task AddOffer(Offer offer)
+        public async Task AddOfferAsync(Offer offer)
         {
-            await _offerRepository.AddOffer(offer);
+            await _offerRepository.AddOfferAsync(offer);
         }
 
-        public async Task UpdateOffer(OfferVM offerVM)
+        public async Task UpdateOfferAsync(OfferVM offerVM)
         {
-            var offerEntity = await _offerRepository.GetOffer(offerVM.Id);
+            var offerEntity = await _offerRepository.GetOfferAsync(offerVM.Id);
 
             offerEntity.Title = offerVM.Title;
             offerEntity.Description = offerVM.Description;
@@ -35,40 +35,40 @@ namespace Shoppie.Business.Services
             offerEntity.IsFinished = offerVM.IsFinished;
             offerEntity.CreationDate = offerVM.CreationDate;
 
-            await _offerRepository.UpdateOffer(offerEntity);
+            await _offerRepository.UpdateOfferAsync(offerEntity);
         }
 
-        public async Task<List<OfferVM>> GetAllActiveOffers()
+        public async Task<List<OfferVM>> GetAllActiveOffersAsync()
         {
             var offers = await _offerRepository.GetAllActiveOffers().ToModel().ToListAsync();
 
             return offers;
         }
 
-        public async Task<List<OfferVM>> GetAllOffers()
+        public async Task<List<OfferVM>> GetAllOffersAsync()
         {
             var offers = await _offerRepository.GetAllOffers().ToModel().ToListAsync();
 
             return offers;
         }
 
-        public async Task<List<OfferVM>> GetDiscountedOffers()
+        public async Task<List<OfferVM>> GetDiscountedOffersAsync()
         {
             var offers = await _offerRepository.GetDiscountedOffers().ToModel().ToListAsync();
 
             return offers;
         }
 
-        public async Task<List<OfferVM>> GetNewOffers(int count)
+        public async Task<List<OfferVM>> GetNewOffersAsync(int count)
         {
             var offers = await _offerRepository.GetNewOffers(count).ToModel().ToListAsync();
 
             return offers;
         }
 
-        public async Task<OfferVM> GetOffer(int? id)
+        public async Task<OfferVM> GetOfferAsync(int? id)
         {
-            var offer = await _offerRepository.GetOffer(id);
+            var offer = await _offerRepository.GetOfferAsync(id);
 
             return new OfferVM
             {
@@ -84,13 +84,13 @@ namespace Shoppie.Business.Services
             };
         }
 
-        public async Task DeleteOffer(int id)
+        public async Task DeleteOfferAsync(int id)
         {
-            var offer = await _offerRepository.GetOffer(id);
-            await _offerRepository.DeleteOffer(offer);
+            var offer = await _offerRepository.GetOfferAsync(id);
+            await _offerRepository.DeleteOfferAsync(offer);
         }
 
-        public Task<List<OfferVM>> GetOffersByCategoryId(int id)
+        public Task<List<OfferVM>> GetOffersByCategoryIdAsync(int id)
         {
             var offers = _offerRepository.GetOffersByCategoryId(id);
 

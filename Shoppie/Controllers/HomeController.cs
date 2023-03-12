@@ -21,14 +21,14 @@ namespace Shoppie.Controllers
 
         public async Task<IActionResult> New()
         {
-            var offers = await _offerService.GetNewOffers(3);
+            var offers = await _offerService.GetNewOffersAsync(3);
 
             return View(offers);
         }
 
         public async Task<IActionResult> Index()
         {
-            var offers = await _offerService.GetAllActiveOffers();
+            var offers = await _offerService.GetAllActiveOffersAsync();
 
             return View(offers);
         }
@@ -47,7 +47,7 @@ namespace Shoppie.Controllers
 
         public IActionResult AddToCart(int id)
         {
-            _cartManager.AddToCart(id);
+            _cartManager.AddToCartAsync(id);
 
             return RedirectToAction("Index");
         }
@@ -59,7 +59,7 @@ namespace Shoppie.Controllers
         
         public async Task<IActionResult> Discount()
         {
-            var offers = await _offerService.GetDiscountedOffers();
+            var offers = await _offerService.GetDiscountedOffersAsync();
             
             foreach (var offer in offers)
             {
