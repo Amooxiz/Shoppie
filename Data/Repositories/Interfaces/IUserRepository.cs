@@ -4,10 +4,10 @@ namespace Shoppie.DataAccess.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        public Task<bool> ChangePersonalDiscount(double discount, string userId);
+        public Task<bool> ChangePersonalDiscountAsync(double discount, string userId);
         public IQueryable<AppUser> GetUsers();
-        public Task<AppUser> GetUser(string id);
-        public Task UpdateUser(AppUser appUser);
-        public Task<bool> DeleteUser(string id);
+        public Task<AppUser> GetUserAsync(string id);
+        public Task UpdateUserAsync(AppUser appUser);
+        public Task<bool> DeleteUserAsync(string id);
     }
 }

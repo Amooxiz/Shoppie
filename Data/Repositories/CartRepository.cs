@@ -5,7 +5,7 @@ namespace Shoppie.DataAccess.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        public async Task<Cart> GetCart(string userId)
+        public async Task<Cart> GetCartAsync(string userId)
         {
             throw new NotImplementedException();
         }

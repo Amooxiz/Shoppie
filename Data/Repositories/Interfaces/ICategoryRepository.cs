@@ -5,9 +5,9 @@ namespace Shoppie.DataAccess.Repositories.Interfaces
     public interface ICategoryRepository
     {
         IQueryable<Category> GetAllCategories();
-        Task DisableCategory(Category category);
-        Task EnableCategory(Category category);
-        Task<Category> GetCategory(int id);
+        Task DisableCategoryAsync(Category category);
+        Task EnableCategoryAsync(Category category);
+        Task<Category> GetCategoryAsync(int id);
 
     }
 }

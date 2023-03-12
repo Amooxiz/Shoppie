@@ -11,9 +11,9 @@ namespace Shoppie.DataAccess.Repositories.Interfaces
         IQueryable<Offer> GetDiscountedOffers();
         IQueryable<Offer> GetAllActiveOffers();
         /*IQueryable<Offer> GetUsersOffers(string userId);*/
-        Task<Offer> GetOffer(int? id);
-        Task AddOffer(Offer offer);
-        Task UpdateOffer(Offer offer);
-        Task DeleteOffer(Offer offer);
+        Task<Offer> GetOfferAsync(int? id);
+        Task AddOfferAsync(Offer offer);
+        Task UpdateOfferAsync(Offer offer);
+        Task DeleteOfferAsync(Offer offer);
     }
 }
