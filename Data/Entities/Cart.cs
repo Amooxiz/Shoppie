@@ -16,7 +16,7 @@ namespace Shoppie.DataAccess.Entities
         public bool IsFinished { get; set; }
         public DateTime? FinishDate { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
         
         public ICollection<CartItem> Items { get; set; }
     }

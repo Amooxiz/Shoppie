@@ -33,7 +33,7 @@ namespace Shoppie.Controllers
             return View(offers);
         }
 
-        public IActionResult Cart()
+        public async Task<IActionResult> Cart()
         {
             if (HttpContext.Request.Cookies["UserId"] is null || !User.Identity.IsAuthenticated)
             {
@@ -45,9 +45,9 @@ namespace Shoppie.Controllers
             return View(cart.Items);
         }
 
-        public IActionResult AddToCart(int id)
+        public async Task<IActionResult> AddToCart(int id)
         {
-            _cartManager.AddToCartAsync(id);
+            await _cartManager.AddToCart(id);
 
             return RedirectToAction("Index");
         }
