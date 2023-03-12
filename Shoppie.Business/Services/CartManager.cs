@@ -17,7 +17,7 @@ namespace Shoppie.Business.Services
         {
             _ctx = ctx;
         }
-        public async Task AddToCartAsync(int offerId)
+        public async Task AddToCartAsyncc(int offerId)
         {
             if(_ctx.HttpContext.User.Identity.IsAuthenticated is true)
             {
