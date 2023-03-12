@@ -15,7 +15,7 @@ namespace Shoppie.Business.Services
             _ctx = ctx;
             _cartRepository = cartRepository;
         }
-        public async Task AddToCartAsync(int offerId)
+        public async Task AddToCartAsyncc(int offerId)
         {
             var cart = await FindCart();
 
