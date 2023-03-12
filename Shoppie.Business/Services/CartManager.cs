@@ -17,7 +17,7 @@ namespace Shoppie.Business.Services
         {
             _ctx = ctx;
         }
-        public async Task AddToCart(int offerId)
+        public async Task AddToCartAsync(int offerId)
         {
             if(_ctx.HttpContext.User.Identity.IsAuthenticated is true)
             {
@@ -26,7 +26,7 @@ namespace Shoppie.Business.Services
             }
         }
 
-        public async Task RemoveFromCart()
+        public async Task RemoveFromCartAsync()
         {
             throw new NotImplementedException();
         }

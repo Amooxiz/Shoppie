@@ -12,13 +12,13 @@ namespace Shoppie.DataAccess.Repositories
             _context = context;
         }
 
-        public async Task DisableCategory(Category category)
+        public async Task DisableCategoryAsync(Category category)
         {
             _context.Categories.Update(category);
             await _context.SaveChangesAsync();
         }
 
-        public async Task EnableCategory(Category category)
+        public async Task EnableCategoryAsync(Category category)
         {
             _context.Categories.Update(category);
             await _context.SaveChangesAsync();
@@ -29,7 +29,7 @@ namespace Shoppie.DataAccess.Repositories
             return _context.Categories;
         }
 
-        public async Task<Category> GetCategory(int id)
+        public async Task<Category> GetCategoryAsync(int id)
         {
             var category = await _context.Categories.SingleOrDefaultAsync(c => c.Id == id);
             return category;

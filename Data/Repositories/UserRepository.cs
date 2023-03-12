@@ -18,7 +18,7 @@ namespace Shoppie.DataAccess.Repositories
             _context = context;
         }
 
-        public async Task<bool> ChangePersonalDiscount(double discount, string userId)
+        public async Task<bool> ChangePersonalDiscountAsync(double discount, string userId)
         {
             AppUser? user = await _userManager.FindByIdAsync(userId);
 
@@ -35,17 +35,17 @@ namespace Shoppie.DataAccess.Repositories
             return _context.Users.Where(u => u.IsAdmin == false);
         }
 
-        public async Task<AppUser> GetUser(string id)
+        public async Task<AppUser> GetUserAsync(string id)
         {
             return await _context.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id && u.IsAdmin == false);
         }
 
-        public async Task UpdateUser(AppUser appUser)
+        public async Task UpdateUserAsync(AppUser appUser)
         {
             _ = await _userManager.UpdateAsync(appUser);
         }
 
-        public async Task<bool> DeleteUser(string id)
+        public async Task<bool> DeleteUserAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             

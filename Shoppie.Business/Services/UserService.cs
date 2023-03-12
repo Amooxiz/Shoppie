@@ -24,14 +24,14 @@ namespace Shoppie.Business.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> ChangePersonalDiscount(double discount, string userId)
+        public async Task<bool> ChangePersonalDiscountAsync(double discount, string userId)
         {
             if (discount < 0 && discount > 1) return false;
 
-            return await _userRepository.ChangePersonalDiscount(discount, userId);
+            return await _userRepository.ChangePersonalDiscountAsync(discount, userId);
         }
 
-        public async Task<List<AppUserVM>> GetUsers()
+        public async Task<List<AppUserVM>> GetUsersAsync()
         {
 
             var users = await _userRepository
@@ -43,9 +43,9 @@ namespace Shoppie.Business.Services
 
         }
 
-        public async Task<AppUserVM> GetUser(string id)
+        public async Task<AppUserVM> GetUserAsync(string id)
         {
-            var user = await _userRepository.GetUser(id);
+            var user = await _userRepository.GetUserAsync(id);
 
             AppUserVM vm = new()
             {
@@ -66,9 +66,9 @@ namespace Shoppie.Business.Services
             return vm;
         }
 
-        public async Task UpdateUser(AppUserManagementModel appUser)
+        public async Task UpdateUserAsync(AppUserManagementModel appUser)
         {
-            var user = await _userRepository.GetUser(appUser.User.Id);
+            var user = await _userRepository.GetUserAsync(appUser.User.Id);
 
             user.UserName = appUser.User.UserName;
             user.Address.Street = appUser.User.Street;
@@ -92,12 +92,12 @@ namespace Shoppie.Business.Services
                 await _userManager.RemoveFromRoleAsync(user, Roles.Administrator.ToString());
             }
 
-            await _userRepository.UpdateUser(user);
+            await _userRepository.UpdateUserAsync(user);
         }
 
-        public async Task<bool> DeleteUser(string id)
+        public async Task<bool> DeleteUserAsync(string id)
         {
-            return await _userRepository.DeleteUser(id);
+            return await _userRepository.DeleteUserAsync(id);
         }
     }
 }

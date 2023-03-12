@@ -36,24 +36,24 @@ namespace Shoppie.DataAccess.Repositories
             return _context.Offers.Where(o => o.OwnerId == userId);
         }*/
 
-        public async Task<Offer> GetOffer(int? id)
+        public async Task<Offer> GetOfferAsync(int? id)
         {
             return await _context.Offers.Include(o => o.Category).SingleOrDefaultAsync(o => o.Id == id);
         }
 
-        public async Task AddOffer(Offer offer)
+        public async Task AddOfferAsync(Offer offer)
         {
             await _context.Offers.AddAsync(offer);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateOffer(Offer offer)
+        public async Task UpdateOfferAsync(Offer offer)
         {
             _context.Offers.Update(offer);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteOffer(Offer offer)
+        public async Task DeleteOfferAsync(Offer offer)
         {
             _context.Offers.Remove(offer);
             await _context.SaveChangesAsync();

@@ -38,7 +38,7 @@ namespace Shoppie.Controllers
                 return NotFound();
             }
 
-            var offer = await _offerService.GetOffer(id);
+            var offer = await _offerService.GetOfferAsync(id);
 
             if (offer is null)
             {
@@ -55,7 +55,7 @@ namespace Shoppie.Controllers
         {
             Offer offerModel = new();
 
-            var categories = await _categoryService.GetAllCategories();
+            var categories = await _categoryService.GetAllCategoriesAsync();
 
             ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offerModel.CategoryId);
             return View(offerModel);
@@ -71,14 +71,14 @@ namespace Shoppie.Controllers
         {
             if (!ModelState.IsValid && offer.Category is not null)
             {
-                var categories = await _categoryService.GetAllCategories();
+                var categories = await _categoryService.GetAllCategoriesAsync();
 
                 ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offer.CategoryId);
                 return View(offer);
             }
             
             offer.CreationDate = DateTime.Now;
-            await _offerService.AddOffer(offer);
+            await _offerService.AddOfferAsync(offer);
 
             return RedirectToAction(nameof(Index));
         }
@@ -97,14 +97,14 @@ namespace Shoppie.Controllers
                 return NotFound();
             }
 
-            var offer = await _offerService.GetOffer(id);
+            var offer = await _offerService.GetOfferAsync(id);
 
             if (offer is null)
             {
                 return NotFound();
             }
 
-            var categories = await _categoryService.GetAllCategories();
+            var categories = await _categoryService.GetAllCategoriesAsync();
 
 
             ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
@@ -123,7 +123,7 @@ namespace Shoppie.Controllers
 
             if (ModelState.IsValid)
             {
-                await _offerService.UpdateOffer(offer);
+                await _offerService.UpdateOfferAsync(offer);
                 return View(offer);
             }
     
@@ -137,7 +137,7 @@ namespace Shoppie.Controllers
             if (id is null)
                 return NotFound();
 
-            var offer = await _offerService.GetOffer(id);
+            var offer = await _offerService.GetOfferAsync(id);
 
             return offer is null ? NotFound() : View(offer);
         }
@@ -148,7 +148,7 @@ namespace Shoppie.Controllers
         [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _offerService.DeleteOffer(id);
+            await _offerService.DeleteOfferAsync(id);
             return RedirectToAction("Index", "Home");
         }
 
@@ -160,8 +160,8 @@ namespace Shoppie.Controllers
                 ModelState.AddModelError("categories", TempData["categories"].ToString());
             }
 
-            var offers = await _offerService.GetAllOffers();
-            var categories = await _categoryService.GetAllCategories();
+            var offers = await _offerService.GetAllOffersAsync();
+            var categories = await _categoryService.GetAllCategoriesAsync();
         
             OfferManagementModel model = new()
             {
@@ -176,7 +176,7 @@ namespace Shoppie.Controllers
         [HttpPost]
         public async Task<IActionResult> GeneratePDF(int SelectedCategoryId)
         {
-            var offers = await _offerService.GetOffersByCategoryId(SelectedCategoryId);
+            var offers = await _offerService.GetOffersByCategoryIdAsync(SelectedCategoryId);
             
             if(offers.Count == 0)
             {

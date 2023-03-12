@@ -5,10 +5,10 @@ namespace Shoppie.Business.Services.Interfaces
 {
     public interface ICategoryService
     {
-        Task<List<CategoryVM>> GetAllCategories();
-        Task DisableCategory(Category category);
-        Task EnableCategory(Category category);
-        Task<Category> GetCategory(int id);
+        Task<List<CategoryVM>> GetAllCategoriesAsync();
+        Task DisableCategoryAsync(Category category);
+        Task EnableCategoryAsync(Category category);
+        Task<Category> GetCategoryAsync(int id);
 
     }
 }
