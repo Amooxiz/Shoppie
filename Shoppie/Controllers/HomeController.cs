@@ -8,37 +8,32 @@ namespace Shoppie.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IOfferService _offerService;
-        private readonly INBPIntegratorService _nbpIntegratorService;
         private readonly ICookieService _cookieService;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly ICartManager _cartManager;
 
-        public HomeController(ILogger<HomeController> logger, IOfferService offerService,
-            INBPIntegratorService nBPIntegratorService, ICookieService cookieService, UserManager<AppUser> userManager)
+        public HomeController(IOfferService offerService, ICookieService cookieService, ICartManager cartManager)
         {
-            _logger = logger;
             _offerService = offerService;
-            _nbpIntegratorService = nBPIntegratorService;
             _cookieService = cookieService;
-            _userManager = userManager;
+            _cartManager = cartManager;
         }
 
         public async Task<IActionResult> New()
         {
-            var offers = await _offerService.GetNewOffers(3);
+            var offers = await _offerService.GetNewOffersAsync(3);
 
             return View(offers);
         }
 
         public async Task<IActionResult> Index()
         {
-            var offers = await _offerService.GetAllActiveOffers();
+            var offers = await _offerService.GetAllActiveOffersAsync();
 
             return View(offers);
         }
 
-        public IActionResult Cart()
+        public async Task<IActionResult> Cart()
         {
             if (HttpContext.Request.Cookies["UserId"] is null || !User.Identity.IsAuthenticated)
             {
@@ -50,8 +45,10 @@ namespace Shoppie.Controllers
             return View(cart.Items);
         }
 
-        public IActionResult AddToCart(int id)
+        public async Task<IActionResult> AddToCart(int id)
         {
+            await _cartManager.AddToCartAsync(id);
+
             return RedirectToAction("Index");
         }
 
@@ -62,7 +59,7 @@ namespace Shoppie.Controllers
         
         public async Task<IActionResult> Discount()
         {
-            var offers = await _offerService.GetDiscountedOffers();
+            var offers = await _offerService.GetDiscountedOffersAsync();
             
             foreach (var offer in offers)
             {

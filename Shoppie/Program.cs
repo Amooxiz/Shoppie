@@ -49,7 +49,7 @@ app.UseSession();
 
 app.UseRequestLocalization();
 
-app.SeedDatabase();
+await app.SeedDatabase();
 app.UseWhen(context => context.User?.Identity?.IsAuthenticated is false, a => a.UseMiddleware<AssignCookieMiddleware>());
 
 

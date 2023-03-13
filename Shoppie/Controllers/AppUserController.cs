@@ -19,14 +19,14 @@ namespace Shoppie.Controllers
 
         public async Task<IActionResult> Management()
         {
-            var users = await _userService.GetUsers();
+            var users = await _userService.GetUsersAsync();
             return View(users);
         }
 
         // GET: AppUserController/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var user = await _userService.GetUser(id);
+            var user = await _userService.GetUserAsync(id);
 
             if (user is null)
                 return NotFound();
@@ -38,7 +38,7 @@ namespace Shoppie.Controllers
         // GET: AppUserController/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            var user = await _userService.GetUser(id);
+            var user = await _userService.GetUserAsync(id);
 
             if (user is null)
                 return NotFound();
@@ -61,7 +61,7 @@ namespace Shoppie.Controllers
             if (user is null)
                 return NotFound();
 
-            await _userService.UpdateUser(model);
+            await _userService.UpdateUserAsync(model);
 
 
             await _signInManager.RefreshSignInAsync(user);
@@ -73,7 +73,7 @@ namespace Shoppie.Controllers
         public async Task<ActionResult> Delete(string id)
         {
 
-            var user = await _userService.GetUser(id);
+            var user = await _userService.GetUserAsync(id);
             return View(user);
         }
 
@@ -84,10 +84,10 @@ namespace Shoppie.Controllers
         {
             try
             {
-                var result = await _userService.DeleteUser(id);
+                var result = await _userService.DeleteUserAsync(id);
                 if (!result)
                 {
-                    throw new Exception("Problem with deleting user");
+                    throw new InvalidOperationException("Problem with deleting user");
                 }
                 return RedirectToAction(nameof(Index));
             }

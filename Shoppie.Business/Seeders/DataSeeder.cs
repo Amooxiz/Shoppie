@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Client;
 using Shoppie.Business.Seeders.Enums;
 using Shoppie.DataAccess.Entities;
 
@@ -6,35 +7,46 @@ namespace Shoppie.Business.Seeders
 {
     public static class DataSeeder
     {
-        public static void Seed(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task Seed(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            SeedRoles(roleManager);
-            SeedUsers(userManager);
+            await SeedRoles(roleManager);
+            await SeedUsers(userManager);
         }
 
-        private static void SeedRoles(RoleManager<IdentityRole> roleManager)
+        private static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
         {
-            if (!roleManager.RoleExistsAsync(Roles.Administrator.ToString()).Result)
+            if (!await roleManager.RoleExistsAsync(Roles.Administrator.ToString()))
             {
                 var role = new IdentityRole
                 {
                     Name = Roles.Administrator.ToString()
                 };
+                
+                var result = await roleManager.CreateAsync(role);
 
-                var result = roleManager.CreateAsync(role).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception();
+                }
+
             }
 
-            if (!roleManager.RoleExistsAsync(Roles.BasicUser.ToString()).Result)
+            if (! await roleManager.RoleExistsAsync(Roles.BasicUser.ToString()))
             {
                 var role = new IdentityRole
                 {
                     Name = Roles.BasicUser.ToString()
                 };
 
-                var result = roleManager.CreateAsync(role).Result;
+                var result = await roleManager.CreateAsync(role);
+
+                if(!result.Succeeded)
+                {
+                    throw new Exception();
+                }
             }
         }
-        private static void SeedUsers(UserManager<AppUser> userManager)
+        private static async Task SeedUsers(UserManager<AppUser> userManager)
         {
             if (userManager.FindByEmailAsync("admin@admin.com").Result is null)
             {
@@ -44,7 +56,7 @@ namespace Shoppie.Business.Seeders
                     Email = "admin@admin.com",
                     LastName = "admin",
                     Name = "admin",
-                    isAdmin = true,
+                    IsAdmin = true,
                     Address = new Address
                     {
                         ApartamentNr = 0,
@@ -56,15 +68,13 @@ namespace Shoppie.Business.Seeders
                     }
                 };
 
-
-                var result = userManager.CreateAsync(user, "Password123.").Result;
+                var result = await userManager.CreateAsync(user, "Password123.");
 
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(user, Roles.Administrator.ToString()).Wait();
-                    var token = userManager.GenerateEmailConfirmationTokenAsync(user);
-                    userManager.ConfirmEmailAsync(user, token.Result);
-                    user.EmailConfirmed = true;
+                    await userManager.AddToRoleAsync(user, Roles.Administrator.ToString());
+                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await userManager.ConfirmEmailAsync(user, token);
                 }
             }
         }

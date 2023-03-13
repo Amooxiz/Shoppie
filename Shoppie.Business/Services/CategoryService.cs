@@ -15,33 +15,33 @@ namespace Shoppie.Business.Services
             _categoryRepository = categoryRepository;
         }
 
-        public void DisableCategory(Category category)
+        public async Task DisableCategoryAsync(Category category)
         {
             category.IsActive = false;
 
-            _categoryRepository.DisableCategory(category);
+            await _categoryRepository.DisableCategoryAsync(category);
         }
 
 
-        public async Task<List<CategoryVM>> GetAllCategories()
+        public async Task<List<CategoryVM>> GetAllCategoriesAsync()
         {
             var categories = await _categoryRepository.GetAllCategories().ToModel().ToListAsync();
 
             return categories;
         }
 
-        public Category GetCategory(int id)
+        public async Task<Category> GetCategoryAsync(int id)
         {
-            var category = _categoryRepository.GetCategory(id);
+            var category = await _categoryRepository.GetCategoryAsync(id);
 
             return category;
         }
 
-        public void EnableCategory(Category category)
+        public async Task EnableCategoryAsync(Category category)
         {
             category.IsActive = true;
 
-            _categoryRepository.EnableCategory(category);
+            await _categoryRepository.EnableCategoryAsync(category);
         }
     }
 }

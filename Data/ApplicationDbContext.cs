@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Shoppie.DataAccess.DbSeeder;
 using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.DataAccess;
@@ -23,12 +24,10 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        new CategoryEntitySeed().Configure(builder.Entity<Category>());
+        new OfferEntitySeed().Configure(builder.Entity<Offer>());
+
         base.OnModelCreating(builder);
-
-
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
     }
 }
 
