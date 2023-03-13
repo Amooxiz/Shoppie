@@ -47,7 +47,7 @@ namespace Shoppie.Controllers
 
         public async Task<IActionResult> AddToCart(int id)
         {
-            await _cartManager.AddToCart(id);
+            await _cartManager.AddToCartAsync(id);
 
             return RedirectToAction("Index");
         }

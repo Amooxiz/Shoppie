@@ -15,66 +15,55 @@ namespace Shoppie.Business.Services
             _ctx = ctx;
             _cartRepository = cartRepository;
         }
-        public async Task AddToCartAsyncc(int offerId)
+        public async Task AddToCartAsync(int offerId)
         {
-            var cart = await FindCart();
+            var cart = await GetCartAsync();
 
             cart.Items.Add(new CartItem { OfferId = offerId });
 
-            await _cartRepository.AddToCart(cart);
+            await _cartRepository.AddToCartAsync(cart);
         }
+        public async Task CreateCartAsync(string userId, bool IsAuthenthicated)
+        {
+            Cart cart = new Cart { };
 
-        public Cart CreateCartForUser(string userId, int offerId)
-        {
-            return new Cart
-            {
-                AuthenticatedCartOwnerId = userId,
-                Items = new List<CartItem>
-                {
-                    new CartItem
-                    {
-                        OfferId = offerId,
-                    }
-                }
-            };
+            if (IsAuthenthicated)
+                cart.AuthenticatedCartOwnerId = userId;
+            else
+                cart.AnnoynymousCartOwnerId = userId;
+
+            await _cartRepository.CreateCartAsync(cart);
         }
-        public Cart CreateCartForGuest(string guestId, int offerId)
-        {
-            return new Cart
-            {
-                AnnoynymousCartOwnerId = guestId,                
-                Items = new List<CartItem>
-                {
-                    new CartItem
-                    {
-                        OfferId = offerId,
-                    }
-                }
-            };
-        }
-        public async Task RemoveFromCart()
+        public async Task RemoveFromCartAsync()
         {
             throw new NotImplementedException();
         }
-
-        public async Task<Cart?> GetCart()
+        public async Task<Cart?> GetCartAsync()
         {
-            return new Cart { };
-        }
-
-        public async Task<Cart?> FindCart()
-        {
-            string? userId = null;
-
+            string? userId;
+            bool IsAuthenthicated;
+            
             if (_ctx.HttpContext.User.Identity.IsAuthenticated is true)
             {
                 userId = _ctx.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                IsAuthenthicated = true;
+            }
+            else
+            {
+                userId = _ctx.HttpContext.Request.Cookies["UserId"];
+                IsAuthenthicated = false;
+            }
+            
+            var cart = await _cartRepository.GetCartAsync(userId);
+
+            if (cart is null)
+            { 
+               await CreateCartAsync(userId, IsAuthenthicated);
+               cart = await _cartRepository.GetCartAsync(userId);
             }
 
-            userId ??= _ctx.HttpContext.Request.Cookies["UserId"];
-
-            return userId is null ?  null : await _cartRepository.GetCart(userId);
-
+            return cart;
         }
-    }
+
+ }
 }

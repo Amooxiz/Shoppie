@@ -4,7 +4,8 @@ namespace Shoppie.DataAccess.Repositories.Interfaces
 {
     public interface ICartRepository
     {
-        Task<Cart?> GetCart(string userId);
-        Task AddToCart(Cart cart);
+        Task<Cart?> GetCartAsync(string userId);
+        Task AddToCartAsync(Cart cart);
+        Task CreateCartAsync(Cart cart);
     }
 }

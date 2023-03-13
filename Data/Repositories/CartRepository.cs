@@ -11,17 +11,22 @@ namespace Shoppie.DataAccess.Repositories
         {
             _context = context;
         }
-        public async Task<Cart?> GetCart(string userId)
+        public async Task<Cart?> GetCartAsync(string userId)
         {
             return await _context.ShoppingCart.
                 FirstOrDefaultAsync( c => ( c.AuthenticatedCartOwnerId == userId
                 || c.AnnoynymousCartOwnerId == userId ) && !c.IsFinished);
         }   
-        public async Task AddToCart(Cart cart)
+        public async Task AddToCartAsync(Cart cart)
         {
             _context.Update(cart);
             await _context.SaveChangesAsync();            
         }
 
+        public async Task CreateCartAsync(Cart cart)
+        {
+            await _context.AddAsync(cart);
+            await _context.SaveChangesAsync();
+        }
     }
 }

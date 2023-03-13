@@ -11,9 +11,9 @@ namespace Shoppie.Business.Services.Interfaces
 {
     public interface ICartManager
     {
-        Task AddToCart(int offerId);
-        Task RemoveFromCart();
-        Task<Cart?> FindCart();
-        Task<Cart?> GetCart();
+        Task AddToCartAsync(int offerId);
+        Task RemoveFromCartAsync();
+        Task<Cart?> GetCartAsync();
+        Task CreateCartAsync(string userId, bool IsAuthenthicated);
     }
 }

@@ -12,8 +12,8 @@ namespace Shoppie.DataAccess.Entities
         public string? AuthenticatedCartOwnerId { get; set; }
         
         public AppUser AuthenticatedCartOwner { get; set; }
-        
-        public bool IsFinished { get; set; }
+
+        public bool IsFinished { get; set; } = false;
         public DateTime? FinishDate { get; set; }
 
         public DateTime CreationDate { get; set; } = DateTime.Now;
