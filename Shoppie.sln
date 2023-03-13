@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shoppie", "Shoppie\Shoppie.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shoppie.DataAccess", "Data\Shoppie.DataAccess.csproj", "{68307526-5914-4A17-A21A-5EEED33D89CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppie.Business", "Shoppie.Business\Shoppie.Business.csproj", "{D9EE1FBF-2A0E-426F-917B-EE044A097098}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{68307526-5914-4A17-A21A-5EEED33D89CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68307526-5914-4A17-A21A-5EEED33D89CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68307526-5914-4A17-A21A-5EEED33D89CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9EE1FBF-2A0E-426F-917B-EE044A097098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9EE1FBF-2A0E-426F-917B-EE044A097098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9EE1FBF-2A0E-426F-917B-EE044A097098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9EE1FBF-2A0E-426F-917B-EE044A097098}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

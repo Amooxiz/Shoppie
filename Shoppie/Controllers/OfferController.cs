@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Shoppie.Business.Generators.Interfaces;
+using Shoppie.Business.Services.Interfaces;
+using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess;
-using Shoppie.DataAccess.Models;
-using Shoppie.Interfaces;
-using Shoppie.RolesSeed;
-using Shoppie.Services;
-using Shoppie.ViewModels;
+using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Controllers
 {
@@ -26,7 +18,8 @@ namespace Shoppie.Controllers
         private readonly UserManager<AppUser> _userManager;
 
         public OfferController(IOfferService offerService, ICategoryService categoryService,
-            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, INBPIntegratorService nbpIntegratorService, UserManager<AppUser> userManager)
+            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, 
+            INBPIntegratorService nbpIntegratorService, UserManager<AppUser> userManager)
         {
             _offerService = offerService;
             _categoryService = categoryService;
@@ -37,55 +30,15 @@ namespace Shoppie.Controllers
             _userManager = userManager;
         }
 
-        // GET: Offer
-        public async Task<IActionResult> Index()
-        {
-            var offers = await _offerService.GetAllActiveOffers();
-
-            string? rateCookie = _cookieService.GetCookie("rate");
-            if (rateCookie is null)
-            {
-                rateCookie = "PLN";
-                _cookieService.SetCookie("rate", rateCookie);
-            }
-            else if (rateCookie != "PLN")
-            {
-                double rate = await _nbpIntegratorService.GetRate(rateCookie);
-                offers.ForEach(x => x.Price = x.Price * rate * (1.0 - x.Discount));
-            }
-            foreach (var offer in offers)
-            {
-                if (offer.Discount > 0)
-                {
-                    offer.Price = offer.Price * (1.0 - offer.Discount);
-                }
-            }
-            offers.ForEach(x => x.Price = Math.Round(x.Price, 2));
-
-            return  View(offers);
-        }
-
         // GET: Offer/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var offer = _offerService.GetOffer(id);
-
-            string? rateCookie = _cookieService.GetCookie("rate");
-            if (rateCookie is null)
-            {
-                rateCookie = "PLN";
-                _cookieService.SetCookie("rate", rateCookie);
-            }
-            else if (rateCookie != "PLN")
-            {
-                double rate = _nbpIntegratorService.GetRate(rateCookie).Result;
-                offer.Price = offer.Price * rate * (1.0 - offer.Discount);
-            }
+            var offer = await _offerService.GetOfferAsync(id);
 
             if (offer is null)
             {
@@ -102,7 +55,7 @@ namespace Shoppie.Controllers
         {
             Offer offerModel = new();
 
-            var categories = await _categoryService.GetAllCategories();
+            var categories = await _categoryService.GetAllCategoriesAsync();
 
             ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offerModel.CategoryId);
             return View(offerModel);
@@ -118,50 +71,20 @@ namespace Shoppie.Controllers
         {
             if (!ModelState.IsValid && offer.Category is not null)
             {
-                var categories = await _categoryService.GetAllCategories();
+                var categories = await _categoryService.GetAllCategoriesAsync();
 
                 ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", offer.CategoryId);
                 return View(offer);
             }
+            
             offer.CreationDate = DateTime.Now;
-            _offerService.AddOffer(offer);
+            await _offerService.AddOfferAsync(offer);
+
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult AddToCart(int id)
         {
-            var offer = _offerService.GetOffer(id);
-            var user = _userManager.GetUserAsync(User).Result;
-
-            if (user is null)
-            {
-                return Redirect("/Identity/Account/Login");
-            }
-
-            string? rateCookie = _cookieService.GetCookie("rate");
-            if (rateCookie is null)
-            {
-                rateCookie = "PLN";
-                _cookieService.SetCookie("rate", rateCookie);
-            }
-            else if (rateCookie != "PLN")
-            {
-                double rate = _nbpIntegratorService.GetRate(rateCookie).Result;
-                offer.Price = offer.Price * rate;
-            }
-            if (offer.Discount > 0)
-            {
-                offer.Price = offer.Price * (1.0 - offer.Discount);
-            }
-            offer.Price = Math.Round(offer.Price, 2);
-
-            if (user.PersonalDicount > 0)
-            {
-                offer.Price = offer.Price * (1.0 - user.PersonalDicount);
-            }
-
-            _cookieService.AddItemToCart(offer);
-
             return RedirectToAction("Index");
         }
 
@@ -174,14 +97,14 @@ namespace Shoppie.Controllers
                 return NotFound();
             }
 
-            var offer = _offerService.GetOffer(id);
+            var offer = await _offerService.GetOfferAsync(id);
 
             if (offer is null)
             {
                 return NotFound();
             }
 
-            var categories = await _categoryService.GetAllCategories();
+            var categories = await _categoryService.GetAllCategoriesAsync();
 
 
             ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
@@ -200,7 +123,7 @@ namespace Shoppie.Controllers
 
             if (ModelState.IsValid)
             {
-                _offerService.UpdateOffer(offer);
+                await _offerService.UpdateOfferAsync(offer);
                 return View(offer);
             }
     
@@ -214,7 +137,7 @@ namespace Shoppie.Controllers
             if (id is null)
                 return NotFound();
 
-            var offer = _offerService.GetOffer(id);
+            var offer = await _offerService.GetOfferAsync(id);
 
             return offer is null ? NotFound() : View(offer);
         }
@@ -225,8 +148,8 @@ namespace Shoppie.Controllers
         [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _offerService.DeleteOffer(id);
-            return RedirectToAction(nameof(Index));
+            await _offerService.DeleteOfferAsync(id);
+            return RedirectToAction("Index", "Home");
         }
 
        [Authorize(Roles = $"Administrator")]
@@ -237,8 +160,8 @@ namespace Shoppie.Controllers
                 ModelState.AddModelError("categories", TempData["categories"].ToString());
             }
 
-            var offers = await _offerService.GetAllOffers();
-            var categories = await _categoryService.GetAllCategories();
+            var offers = await _offerService.GetAllOffersAsync();
+            var categories = await _categoryService.GetAllCategoriesAsync();
         
             OfferManagementModel model = new()
             {
@@ -253,7 +176,7 @@ namespace Shoppie.Controllers
         [HttpPost]
         public async Task<IActionResult> GeneratePDF(int SelectedCategoryId)
         {
-            var offers = await _offerService.GetOffersByCategoryId(SelectedCategoryId);
+            var offers = await _offerService.GetOffersByCategoryIdAsync(SelectedCategoryId);
             
             if(offers.Count == 0)
             {

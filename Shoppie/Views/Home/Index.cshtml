@@ -1,13 +1,11 @@
-﻿@model IEnumerable<Shoppie.ViewModels.OfferVM>
+﻿@model IEnumerable<OfferVM>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Check the novelties in our store!</h1>
+<h1>Index</h1>
 
-<h1>ItemCount: @ViewBag.cartCount</h1>
-<a asp-controller="Offer" asp-action="Index">AllOffers</a>
 <table class="styled-table">
     <thead>
         <tr>
@@ -32,60 +30,44 @@
             <th>
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsFinished)
-                </td>
-                @if (item.Discount > 0)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Discount)%
-                    </td>
-                }
-                else
-                {
-                    <td></td>
-                }
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    <a asp-action="AddToCart" asp-route-id="@item.Id">AddToCart</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsFinished)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+
+            <td>
+                <a asp-action="AddToCart" asp-route-id="@item.Id">AddToCart</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>
-
-
-
-
-
-
-@*@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-*@
