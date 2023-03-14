@@ -4,88 +4,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Check the novelties in our store!</h1>
+<div>
+    <p>
+        Check our recently added products:
+    </p>
+</div>
 
-<h1>ItemCount: @ViewBag.cartCount</h1>
-<a asp-controller="Offer" asp-action="Index">AllOffers</a>
-<table class="styled-table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsFinished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsFinished)
-                </td>
+<div class="products-container-grid">
+    @foreach (var item in Model)
+    {
+        <div class="grid-item">
+            <div class="products-image-box">
+                <img style="height: 150px">
                 @if (item.Discount > 0)
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Discount)%
-                    </td>
+                    <div class="discount-badge">
+                        <p>-@item.Discount%</p>
+                    </div>
                 }
-                else
-                {
-                    <td></td>
-                }
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    <a asp-action="AddToCart" asp-route-id="@item.Id" class="add-to-cart-btn">AddToCart</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-
-
-
-
-@*@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            </div>
+            <div class="products-text-nested-container">
+                <div class="products-title-box">
+                    <h3>@item.Title</h3>
+                </div>
+                <div>
+                    <p>@item.Description</p>
+                </div>
+                <div>
+                    <p></p>
+                </div>                    
+            </div>
+            <div class="products-price-nested-container">
+                <div class="products-price-box">
+                    <p>@item.Price Zł</p>
+                </div>
+            </div>
+        </div>
+    }
 </div>
-*@

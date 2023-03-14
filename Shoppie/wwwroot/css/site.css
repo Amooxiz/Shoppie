@@ -9,14 +9,74 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     margin-bottom: 60px;
-    background-color: #F2E4FE;
+    background-color: #EBE8E9;
+    font-family: 'Lato';
+    font-family: 'Poppins';
 }
+.products-container-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 5%;
+}
+
+.products-container-grid .grid-item {
+    background-color: #EED6E1;
+    border-radius: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.products-image-box {
+    min-width: 150px;
+    max-width: 20%;
+    position: relative;
+}
+
+.products-text-nested-container {
+    margin: 1%;
+    width: calc(90% - 150px);
+}
+
+.products-price-nested-container {
+    margin: 1%;
+    margin-left: auto;
+    width: 10%;
+    display: flex;
+    justify-content: end;
+}
+
+
+.products-price-box
+{
+}
+
+.products-price-box p {
+}
+
+
+.discount-badge {
+    color: white;
+    background-color: red;
+    width: 15%;
+    min-width: 4ch;
+    position: absolute;
+    top: 65%;
+    right: 0%;
+}
+
+.discount-badge p {
+    font-size: 0.7rem;
+    margin: 10%;
+}
+
+
 .form {
     background-color: #5A198C;
     padding: 20px;
@@ -90,7 +150,7 @@ body {
     font-size: 22px;
     font-weight: 700;
     color: white;
-    background-color: #5A198C;
+    background-color: ;
     margin: 0px 0px 100px 0px;
 }
 
@@ -116,7 +176,7 @@ body {
     color: white;
     text-decoration: none;
     height: 70px;
-    background-color: #5A198C;
+    background-color: #E7218B;
     margin: 0px 0px 100px 0px;
 }
 .header a {
@@ -165,16 +225,7 @@ body {
 }
 
 
-.styled-table {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    width:100%;
-}
+
 .newOffer {
     background-color: #5A198C;
     padding: 20px;
@@ -254,3 +305,4 @@ body {
 #curr{
     display: none;
 }
+
