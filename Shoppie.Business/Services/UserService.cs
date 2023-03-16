@@ -40,28 +40,13 @@ namespace Shoppie.Business.Services
                 .ToListAsync();
 
             return users;
-
         }
 
         public async Task<AppUserVM> GetUserAsync(string id)
         {
             var user = await _userRepository.GetUserAsync(id);
 
-            AppUserVM vm = new()
-            {
-                PersonalDicount = user.PersonalDicount.ToString(),
-                Id = user.Id,
-                Street = user.Address.Street,
-                ApartamentNr = user.Address.ApartamentNr,
-                BuildingNr = user.Address.BuildingNr,
-                City = user.Address.City,
-                Country = user.Address.Country,
-                Email = user.Email,
-                PostalCode = user.Address.PostalCode,
-                LastName = user.LastName,
-                Name = user.Name,
-                UserName = user.UserName,
-            };
+            var vm = user.ToModel();
 
             return vm;
         }
@@ -70,22 +55,14 @@ namespace Shoppie.Business.Services
         {
             var user = await _userRepository.GetUserAsync(appUser.User.Id);
 
-            user.UserName = appUser.User.UserName;
-            user.Address.Street = appUser.User.Street;
-            user.Address.ApartamentNr = appUser.User.ApartamentNr;
-            user.Address.BuildingNr = appUser.User.BuildingNr;
-            user.Address.City = appUser.User.City;
-            user.Address.Country = appUser.User.Country;
-            user.Address.PostalCode = appUser.User.PostalCode;
-            user.Name = appUser.User.Name;
-            user.LastName = appUser.User.LastName;
-            user.Email = appUser.User.Email;
-            user.PersonalDicount = double.Parse(appUser.User.PersonalDicount);
+            MapToEntity(appUser.User, user);
 
-            var isInRole = _userManager.IsInRoleAsync(user, ((Roles)appUser.SelectedRoleId).ToString()).Result;
+            var isInRole = await _userManager.IsInRoleAsync(user, ((Roles)appUser.SelectedRoleId).ToString());
+            var selectedRole = appUser.SelectedRoleId;
+
             if (!isInRole)
             {
-                await _userManager.AddToRoleAsync(user, ((Roles)appUser.SelectedRoleId).ToString());
+                await _userManager.AddToRoleAsync(user, ((Roles)selectedRole).ToString());
             }
             else if (appUser.SelectedRoleId != (int)Roles.Administrator)
             {
@@ -93,6 +70,21 @@ namespace Shoppie.Business.Services
             }
 
             await _userRepository.UpdateUserAsync(user);
+        }
+
+        private void MapToEntity(AppUserVM vm, AppUser entity)
+        {
+            entity.UserName = vm.UserName;
+            entity.Address.Street = vm.Street;
+            entity.Address.ApartamentNr = vm.ApartamentNr;
+            entity.Address.BuildingNr = vm.BuildingNr;
+            entity.Address.City = vm.City;
+            entity.Address.Country = vm.Country;
+            entity.Address.PostalCode = vm.PostalCode;
+            entity.Name = vm.Name;
+            entity.LastName = vm.LastName;
+            entity.Email = vm.Email;
+            entity.PersonalDicount = double.Parse(vm.PersonalDicount);
         }
 
         public async Task<bool> DeleteUserAsync(string id)

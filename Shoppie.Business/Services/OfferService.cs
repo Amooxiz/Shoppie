@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Shoppie.Business.Extensions.VM;
 using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
@@ -24,18 +25,11 @@ namespace Shoppie.Business.Services
 
         public async Task UpdateOfferAsync(OfferVM offerVM)
         {
-            var offerEntity = await _offerRepository.GetOfferAsync(offerVM.Id);
+            var offer = await _offerRepository.GetOfferAsync(offerVM.Id);
 
-            offerEntity.Title = offerVM.Title;
-            offerEntity.Description = offerVM.Description;
-            offerEntity.Price = offerVM.Price;
-            offerEntity.Discount = offerVM.Discount;
-            offerEntity.CategoryId = offerVM.CategoryId;
-            offerEntity.IsActive = offerVM.IsActive;
-            offerEntity.IsFinished = offerVM.IsFinished;
-            offerEntity.CreationDate = offerVM.CreationDate;
-
-            await _offerRepository.UpdateOfferAsync(offerEntity);
+            MapToEntity(offerVM, offer);
+            
+            await _offerRepository.UpdateOfferAsync(offer);
         }
 
         public async Task<List<OfferVM>> GetAllActiveOffersAsync()
@@ -69,19 +63,9 @@ namespace Shoppie.Business.Services
         public async Task<OfferVM> GetOfferAsync(int? id)
         {
             var offer = await _offerRepository.GetOfferAsync(id);
+            var vm = offer.ToModel();
 
-            return new OfferVM
-            {
-                Id = offer.Id,
-                Title = offer.Title,
-                Description = offer.Description,
-                Price = offer.Price,
-                Discount = offer.Discount,
-                CategoryName = offer.Category.Name,
-                CreationDate = offer.CreationDate,
-                IsActive = offer.IsActive,
-                IsFinished = offer.IsFinished
-            };
+            return vm;
         }
 
         public async Task DeleteOfferAsync(int id)
@@ -97,11 +81,17 @@ namespace Shoppie.Business.Services
             return offers.ToModel().ToListAsync();
         }
 
-        /*public async Task<List<OfferVM>> GetUsersOffers(string userId)
-        {
-            var offers = await _offerRepository.GetUsersOffers(userId).ToModel().ToListAsync(); 
-            
-            return offers;
-        }*/
+       private void MapToEntity(OfferVM vm, Offer entity)
+       {
+            entity.Title = vm.Title;
+            entity.Description = vm.Description;
+            entity.Price = vm.Price;
+            entity.Discount = vm.Discount;
+            entity.CategoryId = vm.CategoryId;
+            entity.IsActive = vm.IsActive;
+            entity.IsFinished = vm.IsFinished;
+            entity.CreationDate = vm.CreationDate;
+
+        }
     }
 }

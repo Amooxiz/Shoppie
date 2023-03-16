@@ -31,7 +31,6 @@ namespace Shoppie.Business.ViewModels
 
         [Display(Name = "Category name")]
         public string? CategoryName { get; set; }
-
         public int CategoryId { get; set; }
     }
 }
