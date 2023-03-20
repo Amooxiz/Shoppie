@@ -24,6 +24,7 @@ namespace Shoppie.Extensions.DIContainters
             services.AddTransient<ICookieService, CookieService>();
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddScoped<ICartManager, CartManager>();
+            services.AddScoped<IImageService, ImageService>();
             return services;
         }
     }

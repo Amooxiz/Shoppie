@@ -13,15 +13,13 @@ namespace Shoppie.Business.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<AppUser> _userManager;
 
 
-        public UserService(IUserRepository userRepository, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public UserService(IUserRepository userRepository, UserManager<AppUser> userManager)
         {
             _userRepository = userRepository;
             _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> ChangePersonalDiscountAsync(double discount, string userId)
@@ -72,7 +70,7 @@ namespace Shoppie.Business.Services
             await _userRepository.UpdateUserAsync(user);
         }
 
-        private void MapToEntity(AppUserVM vm, AppUser entity)
+        private static void MapToEntity(AppUserVM vm, AppUser entity)
         {
             entity.UserName = vm.UserName;
             entity.Address.Street = vm.Street;

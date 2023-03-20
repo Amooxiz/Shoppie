@@ -11,20 +11,30 @@ namespace Shoppie.Business.Services
     public class OfferService : IOfferService
     {
         private readonly IOfferRepository _offerRepository;
-        private readonly ICategoryRepository _categoryRepository;
-        public OfferService(IOfferRepository offerRepository, ICategoryRepository categoryRepostiory)
+        private readonly IImageService _imageService;
+        public OfferService(IOfferRepository offerRepository, IImageService imageService)
         {
             _offerRepository = offerRepository;
-            _categoryRepository = categoryRepostiory;
+            _imageService = imageService;
         }
 
-        public async Task AddOfferAsync(Offer offer)
+        public async Task AddOfferAsync(OfferVM vM)
         {
+            vM.ImagePath = await _imageService.ProcessImage(vM.Image);
+            Offer offer = new();
+            
+            MapToEntity(vM, offer);
+
             await _offerRepository.AddOfferAsync(offer);
         }
 
         public async Task UpdateOfferAsync(OfferVM offerVM)
         {
+            if (offerVM.Image is not null)
+            {
+                offerVM.ImagePath = await _imageService.ProcessImage(offerVM.Image);
+            }
+            
             var offer = await _offerRepository.GetOfferAsync(offerVM.Id);
 
             MapToEntity(offerVM, offer);
@@ -81,7 +91,7 @@ namespace Shoppie.Business.Services
             return offers.ToModel().ToListAsync();
         }
 
-       private void MapToEntity(OfferVM vm, Offer entity)
+       private static void MapToEntity(OfferVM vm, Offer entity)
        {
             entity.Title = vm.Title;
             entity.Description = vm.Description;
@@ -91,7 +101,7 @@ namespace Shoppie.Business.Services
             entity.IsActive = vm.IsActive;
             entity.IsFinished = vm.IsFinished;
             entity.CreationDate = vm.CreationDate;
-
-        }
+            entity.ImagePath = vm.ImagePath;
+       }
     }
 }

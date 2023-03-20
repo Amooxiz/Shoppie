@@ -12,7 +12,7 @@ namespace Shoppie.Business.Services.Interfaces
         Task<List<OfferVM>> GetAllActiveOffersAsync();
         /*        Task<List<OfferVM>> GetUsersOffers(string userId);*/
         Task<OfferVM> GetOfferAsync(int? id);
-        Task AddOfferAsync(Offer offer);
+        Task AddOfferAsync(OfferVM offer);
         Task UpdateOfferAsync(OfferVM offer);
         Task DeleteOfferAsync(int id);
     }

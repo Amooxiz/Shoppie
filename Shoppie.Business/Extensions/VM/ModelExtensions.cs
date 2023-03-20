@@ -87,7 +87,8 @@ public static class AppUserExtensions
             CategoryName = o.Category.Name,
             CreationDate = o.CreationDate,
             IsActive = o.IsActive,
-            IsFinished = o.IsFinished
+            IsFinished = o.IsFinished,
+            ImagePath = o.ImagePath,
         };
     }
 }
