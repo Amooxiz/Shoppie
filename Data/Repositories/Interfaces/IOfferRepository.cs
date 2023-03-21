@@ -10,6 +10,9 @@ namespace Shoppie.DataAccess.Repositories.Interfaces
         IQueryable<Offer> GetNewOffers(int count);
         IQueryable<Offer> GetDiscountedOffers();
         IQueryable<Offer> GetAllActiveOffers();
+        (IQueryable<Offer>, int) GetAllOffersPaginated(int pageNumber, int pageSize);
+        (IQueryable<Offer>, int) GetDiscountedOffersPaginated(int pageNumber, int pageSize);
+        (IQueryable<Offer>, int) GetNewOffersPaginated(int pageNumber, int pageSize, int count);
         /*IQueryable<Offer> GetUsersOffers(string userId);*/
         Task<Offer> GetOfferAsync(int? id);
         Task AddOfferAsync(Offer offer);

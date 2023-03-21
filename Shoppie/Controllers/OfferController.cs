@@ -172,7 +172,7 @@ namespace Shoppie.Controllers
             var offers = await _offerService.GetAllOffersAsync();
             var categories = await _categoryService.GetAllCategoriesAsync();
         
-            OfferManagementModel model = new()
+            OfferManagementVM model = new()
             {
                 Offers = offers,
                 Categories = categories,

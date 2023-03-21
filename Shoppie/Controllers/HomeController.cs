@@ -1,7 +1,9 @@
-﻿using Shoppie.Business.Services.Interfaces;
+﻿using iText.Kernel.Geom;
+using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
 using Shoppie.DataAccess.Entities;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Security.Claims;
 
 namespace Shoppie.Controllers
@@ -19,16 +21,24 @@ namespace Shoppie.Controllers
             _cartManager = cartManager;
         }
 
-        public async Task<IActionResult> New()
+        public async Task<IActionResult> New(int pageNr = 1, int pageSize = 7)
         {
-            var offers = await _offerService.GetNewOffersAsync(3);
+            (var offers, var totalCount) = await _offerService.GetNewOffersPaginatedAsync(pageNr, pageSize, 10);
+
+            var pager = new PaginationModel(totalCount, pageNr, pageSize);
+            pager.Action = nameof(New);
+
+            ViewBag.Pager = pager;
 
             return View(offers);
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNr = 1, int pageSize = 7)
         {
-            var offers = await _offerService.GetAllActiveOffersAsync();
+            (var offers, var totalCount) = await _offerService.GetAllOffersPaginatedAsync(pageNr, pageSize);
+
+            var pager = new PaginationModel(totalCount, pageNr, pageSize);
+            ViewBag.Pager = pager;
 
             return View(offers);
         }
@@ -57,10 +67,10 @@ namespace Shoppie.Controllers
             return RedirectToAction("Index");
         }
         
-        public async Task<IActionResult> Discount()
+        public async Task<IActionResult> Discount(int pageNr = 1, int pageSize = 7)
         {
-            var offers = await _offerService.GetDiscountedOffersAsync();
-            
+            (var offers, var totalCount) = await _offerService.GetDiscountedOffersPaginatedAsync(pageNr, pageSize);
+
             foreach (var offer in offers)
             {
                 if (offer.Discount > 0)
@@ -71,7 +81,12 @@ namespace Shoppie.Controllers
             offers.ForEach(x => x.Price = Math.Round(x.Price, 2));
 
 
+            var pager = new PaginationModel(totalCount, pageNr, pageSize);
+            pager.Action = nameof(Discount);
+            ViewBag.Pager = pager;
+
             return View(offers);
+            
         }
 
         public IActionResult Privacy()
@@ -82,7 +97,7 @@ namespace Shoppie.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorVM { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

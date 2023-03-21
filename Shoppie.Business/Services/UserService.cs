@@ -49,7 +49,7 @@ namespace Shoppie.Business.Services
             return vm;
         }
 
-        public async Task UpdateUserAsync(AppUserManagementModel appUser)
+        public async Task UpdateUserAsync(AppUserManagementVM appUser)
         {
             var user = await _userRepository.GetUserAsync(appUser.User.Id);
 

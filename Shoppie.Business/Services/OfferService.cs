@@ -22,7 +22,7 @@ namespace Shoppie.Business.Services
         {
             vM.ImagePath = await _imageService.ProcessImage(vM.Image);
             Offer offer = new();
-            
+
             MapToEntity(vM, offer);
 
             await _offerRepository.AddOfferAsync(offer);
@@ -34,11 +34,11 @@ namespace Shoppie.Business.Services
             {
                 offerVM.ImagePath = await _imageService.ProcessImage(offerVM.Image);
             }
-            
+
             var offer = await _offerRepository.GetOfferAsync(offerVM.Id);
 
             MapToEntity(offerVM, offer);
-            
+
             await _offerRepository.UpdateOfferAsync(offer);
         }
 
@@ -84,15 +84,15 @@ namespace Shoppie.Business.Services
             await _offerRepository.DeleteOfferAsync(offer);
         }
 
-        public Task<List<OfferVM>> GetOffersByCategoryIdAsync(int id)
+        public async Task<List<OfferVM>> GetOffersByCategoryIdAsync(int id) 
         {
             var offers = _offerRepository.GetOffersByCategoryId(id);
 
-            return offers.ToModel().ToListAsync();
+            return await offers.ToModel().ToListAsync();
         }
 
-       private static void MapToEntity(OfferVM vm, Offer entity)
-       {
+        private static void MapToEntity(OfferVM vm, Offer entity)
+        {
             entity.Title = vm.Title;
             entity.Description = vm.Description;
             entity.Price = vm.Price;
@@ -102,6 +102,33 @@ namespace Shoppie.Business.Services
             entity.IsFinished = vm.IsFinished;
             entity.CreationDate = vm.CreationDate;
             entity.ImagePath = vm.ImagePath;
-       }
+        }
+
+        public async Task<(List<OfferVM>, int)> GetAllOffersPaginatedAsync(int pageNumber, int pageSize)
+        {
+            ( var offers, var totalCount ) = _offerRepository.GetAllOffersPaginated(pageNumber, pageSize);
+
+            return ( await offers
+                .ToModel()
+                .ToListAsync(), totalCount );
+        }
+
+        public async Task<(List<OfferVM>, int)> GetDiscountedOffersPaginatedAsync(int pageNumber, int pageSize)
+        {
+            (var offers, var totalCount) = _offerRepository.GetDiscountedOffersPaginated(pageNumber, pageSize);
+
+            return (await offers
+                .ToModel()
+                .ToListAsync(), totalCount);
+        }
+
+        public async Task<(List<OfferVM>, int)> GetNewOffersPaginatedAsync(int pageNumber, int pageSize, int count)
+        {
+            (var offers, var totalCount) = _offerRepository.GetNewOffersPaginated(pageNumber, pageSize, count);
+
+            return (await offers
+                .ToModel()
+                .ToListAsync(), totalCount);
+        }
     }
 }

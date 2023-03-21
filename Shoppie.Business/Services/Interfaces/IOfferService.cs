@@ -8,6 +8,9 @@ namespace Shoppie.Business.Services.Interfaces
         Task<List<OfferVM>> GetAllOffersAsync();
         Task<List<OfferVM>> GetOffersByCategoryIdAsync(int id);
         Task<List<OfferVM>> GetNewOffersAsync(int count);
+        Task<(List<OfferVM>, int)> GetAllOffersPaginatedAsync(int pageNumber, int pageSize);
+        Task<(List<OfferVM>, int)> GetDiscountedOffersPaginatedAsync(int pageNumber, int pageSize);
+        Task<(List<OfferVM>, int)> GetNewOffersPaginatedAsync(int pageNumber, int pageSize, int count);
         Task<List<OfferVM>> GetDiscountedOffersAsync();
         Task<List<OfferVM>> GetAllActiveOffersAsync();
         /*        Task<List<OfferVM>> GetUsersOffers(string userId);*/
