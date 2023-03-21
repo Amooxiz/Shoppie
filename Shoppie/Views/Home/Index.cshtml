@@ -2,30 +2,8 @@
 
 @{
     ViewData["Title"] = "Index";
+    PaginationModel paginationModel = ViewBag.Pager;
 }
 
-
-<div class="products-container-grid">
-    @foreach (var item in Model)
-    {
-            <div class="grid-item">
-                <div class="products-image-box">
-                    <img style="height: 150px">
-                    @if(item.Discount >0)
-                    {
-                        <div class="discount-badge">
-                            <p>-@item.Discount%</p>
-                        </div>
-                    }
-                </div>
-                <div class="products-text-nested-container">
-                    <div class="products-title-box">
-                        <h3>@item.Title</h3>
-                    </div>
-                    <div>
-                        <p>@item.Description</p>
-                    </div>
-                </div>
-            </div>
-    }
-</div>
+<partial name="_OffersPartial" model="@Model" />
+<partial name="_PaginationBarPartial" model="paginationModel"/>

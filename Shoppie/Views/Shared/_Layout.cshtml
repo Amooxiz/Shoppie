@@ -45,10 +45,26 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Shoppie - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer class="footer-container">
+        <nav>
+            <div class="fotoer-sec">
+                &copy; 2022 - Shoppie - 
+                <a class="footer-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </nav>
+        <nav>
+            <div class="footer-section">
+                <i class="bi bi-github"></i> 
+                <a class="footer-link" href="https://github.com/fetus-elitus">
+                    My Github
+                </a>
+            </div>
+        </nav>
+        <nav>
+            <div class="footer-section">
+                <a class="footer-link" href="https://microcorruption.com/map">Microc</a>
+            </div>
+        </nav>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
