@@ -7,7 +7,8 @@ using Shoppie.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") 
+                       ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
@@ -50,7 +51,7 @@ app.UseSession();
 app.UseRequestLocalization();
 
 await app.SeedDatabase();
-app.UseWhen(context => context.User?.Identity?.IsAuthenticated is false, a => a.UseMiddleware<AssignCookieMiddleware>());
+app.UseWhen(context => context.User.Identity?.IsAuthenticated is false, a => a.UseMiddleware<AssignCookieMiddleware>());
 
 
 app.MapControllerRoute(
