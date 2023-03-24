@@ -94,11 +94,11 @@ namespace Shoppie.DataAccess.Repositories
                 .Where(o => o.Discount > 0 && o.IsActive && o.IsFinished != true && o.Category.IsActive == true);
 
             var count = offers.Count();
-                
+
             var result = offers.OrderBy(o => o.Id).Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize);
 
-            
+
             return (offers, count);
         }
 

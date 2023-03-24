@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shoppie.Business.Attributes.Validation
@@ -16,7 +15,7 @@ namespace Shoppie.Business.Attributes.Validation
         public override bool IsValid(object? value)
         {
             IFormFile? file = value as IFormFile;
-            bool isValid = true;            
+            bool isValid = true;
 
             if (file is not null)
             {

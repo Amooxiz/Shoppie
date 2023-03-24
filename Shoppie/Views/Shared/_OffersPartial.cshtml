@@ -26,7 +26,12 @@
                     <p>@item.Price Zł</p>
                 </div>
                 <div class="products-addtocart-box">
-                    <a>1</a>
+                    <form asp-controller="Cart" asp-action="AddToCart">
+                        <button class="btn-cart" type="submit">
+                            <i class="bi bi-cart2">
+                            Add to cart</i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

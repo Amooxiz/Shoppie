@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shoppie.Business.ViewModels
+﻿namespace Shoppie.Business.ViewModels
 {
     public class PaginationModel
-    { 
+    {
         public int TotalRecords { get; private set; }
         public string Action { get; set; } = "Index";
         public int CurrentPage { get; private set; }
@@ -41,7 +35,7 @@ namespace Shoppie.Business.ViewModels
             {
                 paginationEnd = TotalPages;
 
-                if(paginationEnd > 5)
+                if (paginationEnd > 5)
                 {
                     paginationStart = paginationEnd - 5;
                 }
@@ -50,7 +44,7 @@ namespace Shoppie.Business.ViewModels
             StartRecord = (CurrentPage - 1) * PageSize + 1;
             EndRecord = StartRecord - 1 + PageSize;
 
-            if(EndRecord > TotalRecords)
+            if (EndRecord > TotalRecords)
             {
                 EndRecord = TotalRecords;
             }

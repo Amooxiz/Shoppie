@@ -18,7 +18,7 @@ namespace Shoppie.Controllers
         private readonly UserManager<AppUser> _userManager;
 
         public OfferController(IOfferService offerService, ICategoryService categoryService,
-            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService, 
+            ApplicationDbContext context, IPdfGenerator generator, ICookieService cookieService,
             INBPIntegratorService nbpIntegratorService, UserManager<AppUser> userManager)
         {
             _offerService = offerService;
@@ -44,7 +44,7 @@ namespace Shoppie.Controllers
             {
                 return NotFound();
             }
-            
+
 
             return View(offer);
         }
@@ -69,11 +69,11 @@ namespace Shoppie.Controllers
         [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Create(OfferVM vM)
         {
-            if(vM.Image is null)
+            if (vM.Image is null)
             {
                 ModelState.AddModelError(nameof(vM.Image), "Please add an image");
             }
-            
+
             if (!ModelState.IsValid)
             {
                 var categories = await _categoryService.GetAllCategoriesAsync();
@@ -81,7 +81,7 @@ namespace Shoppie.Controllers
                 ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", vM.CategoryId);
                 return View(vM);
             }
-            
+
             await _offerService.AddOfferAsync(vM);
 
             return RedirectToAction(nameof(Index), "Home");
@@ -135,7 +135,7 @@ namespace Shoppie.Controllers
                 await _offerService.UpdateOfferAsync(offer);
                 return View(offer);
             }
-    
+
             return View(offer);
         }
 
@@ -161,7 +161,7 @@ namespace Shoppie.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-       [Authorize(Roles = $"Administrator")]
+        [Authorize(Roles = $"Administrator")]
         public async Task<IActionResult> Management()
         {
             if (TempData["categories"] is not null)
@@ -171,14 +171,14 @@ namespace Shoppie.Controllers
 
             var offers = await _offerService.GetAllOffersAsync();
             var categories = await _categoryService.GetAllCategoriesAsync();
-        
+
             OfferManagementVM model = new()
             {
                 Offers = offers,
                 Categories = categories,
             };
             ViewBag.CategoriesSelectList = new SelectList(model.Categories, "Id", "Name");
-            
+
             return View(model);
         }
 
@@ -186,8 +186,8 @@ namespace Shoppie.Controllers
         public async Task<IActionResult> GeneratePDF(int SelectedCategoryId)
         {
             var offers = await _offerService.GetOffersByCategoryIdAsync(SelectedCategoryId);
-            
-            if(offers.Count == 0)
+
+            if (offers.Count == 0)
             {
                 TempData["categories"] = "Cannot generate PDF for category with no associated offers";
                 return RedirectToAction(nameof(Management));

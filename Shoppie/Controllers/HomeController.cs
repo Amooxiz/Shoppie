@@ -1,39 +1,37 @@
-﻿using iText.Kernel.Geom;
-using Shoppie.Business.Services.Interfaces;
+﻿using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
-using Shoppie.DataAccess.Entities;
 using System.Diagnostics;
-using System.Drawing.Printing;
-using System.Security.Claims;
 
 namespace Shoppie.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IOfferService _offerService;
-        private readonly ICookieService _cookieService;
         private readonly ICartManager _cartManager;
+        private readonly INBPIntegratorService _nbpIntegratorService;
 
-        public HomeController(IOfferService offerService, ICookieService cookieService, ICartManager cartManager)
+        public HomeController(IOfferService offerService, ICartManager cartManager, INBPIntegratorService nbpIntegratorService)
         {
             _offerService = offerService;
-            _cookieService = cookieService;
             _cartManager = cartManager;
+            _nbpIntegratorService = nbpIntegratorService;
         }
 
         public async Task<IActionResult> New(int pageNr = 1, int pageSize = 7)
         {
             (var offers, var totalCount) = await _offerService.GetNewOffersPaginatedAsync(pageNr, pageSize, 10);
 
-            var pager = new PaginationModel(totalCount, pageNr, pageSize);
-            pager.Action = nameof(New);
+            var pager = new PaginationModel(totalCount, pageNr, pageSize)
+            {
+                Action = nameof(New)
+            };
 
             ViewBag.Pager = pager;
 
             return View(offers);
         }
 
-        public async Task<IActionResult> Index(int pageNr = 1, int pageSize = 7)
+        public async Task<IActionResult> Index(int pageNr = 1, int pageSize = 1)
         {
             (var offers, var totalCount) = await _offerService.GetAllOffersPaginatedAsync(pageNr, pageSize);
 
@@ -42,31 +40,23 @@ namespace Shoppie.Controllers
 
             return View(offers);
         }
-
-        public async Task<IActionResult> Cart()
+        public async Task<IActionResult> ChangeCurrency(string prefix)
         {
-            if (HttpContext.Request.Cookies["UserId"] is null || !User.Identity.IsAuthenticated)
+            if (prefix is null)
             {
-                RedirectToAction("Index");
-            } 
+                throw new ArgumentNullException(nameof(prefix));
+            }
 
-            var cart = _cookieService.GetCart();
+            if (prefix == "PLN")
+            {
+                RedirectToAction(nameof(Index));
+            }
 
-            return View(cart.Items);
+            _nbpIntegratorService.GetRate(prefix);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> AddToCart(int id)
-        {
-            await _cartManager.AddToCartAsync(id);
-
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult ChangeRate(string rate)
-        {
-            return RedirectToAction("Index");
-        }
-        
         public async Task<IActionResult> Discount(int pageNr = 1, int pageSize = 7)
         {
             (var offers, var totalCount) = await _offerService.GetDiscountedOffersPaginatedAsync(pageNr, pageSize);
@@ -81,12 +71,14 @@ namespace Shoppie.Controllers
             offers.ForEach(x => x.Price = Math.Round(x.Price, 2));
 
 
-            var pager = new PaginationModel(totalCount, pageNr, pageSize);
-            pager.Action = nameof(Discount);
+            var pager = new PaginationModel(totalCount, pageNr, pageSize)
+            {
+                Action = nameof(Discount)
+            };
             ViewBag.Pager = pager;
 
             return View(offers);
-            
+
         }
 
         public IActionResult Privacy()

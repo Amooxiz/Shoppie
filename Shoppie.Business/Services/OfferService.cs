@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Shoppie.Business.Extensions.VM;
 using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
@@ -84,7 +83,7 @@ namespace Shoppie.Business.Services
             await _offerRepository.DeleteOfferAsync(offer);
         }
 
-        public async Task<List<OfferVM>> GetOffersByCategoryIdAsync(int id) 
+        public async Task<List<OfferVM>> GetOffersByCategoryIdAsync(int id)
         {
             var offers = _offerRepository.GetOffersByCategoryId(id);
 
@@ -106,11 +105,11 @@ namespace Shoppie.Business.Services
 
         public async Task<(List<OfferVM>, int)> GetAllOffersPaginatedAsync(int pageNumber, int pageSize)
         {
-            ( var offers, var totalCount ) = _offerRepository.GetAllOffersPaginated(pageNumber, pageSize);
+            (var offers, var totalCount) = _offerRepository.GetAllOffersPaginated(pageNumber, pageSize);
 
-            return ( await offers
+            return (await offers
                 .ToModel()
-                .ToListAsync(), totalCount );
+                .ToListAsync(), totalCount);
         }
 
         public async Task<(List<OfferVM>, int)> GetDiscountedOffersPaginatedAsync(int pageNumber, int pageSize)

@@ -1,11 +1,9 @@
-﻿using Shoppie.DataAccess.Repositories;
-using Shoppie.DataAccess.Repositories.Interfaces;
-using Shoppie.Business.Services.Interfaces;
+﻿using Shoppie.Business.Generators;
 using Shoppie.Business.Generators.Interfaces;
 using Shoppie.Business.Services;
-using Shoppie.Business.Generators;
-using Shoppie.Business.Seeders;
-using Shoppie.DataAccess.Entities;
+using Shoppie.Business.Services.Interfaces;
+using Shoppie.DataAccess.Repositories;
+using Shoppie.DataAccess.Repositories.Interfaces;
 
 namespace Shoppie.Extensions.DIContainters
 {
@@ -25,6 +23,10 @@ namespace Shoppie.Extensions.DIContainters
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddScoped<ICartManager, CartManager>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddHttpClient<INBPIntegratorService, NBPIntegratorService>(client =>
+            {
+                client.BaseAddress = new Uri("http://api.nbp.pl/api/exchangerates/rates/A/");
+            });
             return services;
         }
     }

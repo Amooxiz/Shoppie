@@ -1,5 +1,4 @@
 ﻿using Shoppie.DataAccess.Entities;
-using System.Drawing;
 
 namespace Shoppie.DataAccess.Repositories.Interfaces
 {

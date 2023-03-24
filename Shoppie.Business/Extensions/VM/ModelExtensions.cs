@@ -58,7 +58,7 @@ public static class AppUserExtensions
     public static AppUserVM ToModel(this AppUser u)
     {
         return new AppUserVM
-        { 
+        {
             Id = u.Id,
             Email = u.Email,
             UserName = u.UserName,

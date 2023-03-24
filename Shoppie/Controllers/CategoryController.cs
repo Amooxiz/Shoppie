@@ -24,7 +24,7 @@ namespace Shoppie.Controllers
         {
             var category = await _categoryService.GetCategoryAsync(id);
 
-            if(category is null)
+            if (category is null)
                 return NotFound();
             else
                 await _categoryService.DisableCategoryAsync(category);

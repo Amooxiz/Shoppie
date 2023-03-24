@@ -1,5 +1,4 @@
 ﻿using Shoppie.Business.ViewModels;
-using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Business.Services.Interfaces
 {

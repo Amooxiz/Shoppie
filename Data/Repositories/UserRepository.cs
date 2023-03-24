@@ -31,7 +31,7 @@ namespace Shoppie.DataAccess.Repositories
         }
 
         public IQueryable<AppUser> GetUsers()
-        { 
+        {
             return _context.Users.Where(u => u.IsAdmin == false);
         }
 
@@ -48,14 +48,14 @@ namespace Shoppie.DataAccess.Repositories
         public async Task<bool> DeleteUserAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            
+
             if (user == null)
             {
                 return false;
             }
-            
+
             var result = await _userManager.DeleteAsync(user);
-            
+
             return result.Succeeded;
         }
     }

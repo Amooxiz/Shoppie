@@ -38,7 +38,7 @@ namespace Shoppie.Business.ViewModels
         [Display(Name = "Category name")]
         public string? CategoryName { get; set; }
         public int CategoryId { get; set; }
-        
+
         [Display(Name = "Image")]
         [MaxSize(5242880, ErrorMessage = "The maximum size of an image is 5MB")]
         [FileExtension(".jpg,.jpeg,.png", ErrorMessage = "The accepted image formats are: .jpg, .jpeg, .png")]

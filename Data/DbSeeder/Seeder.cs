@@ -1,11 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.DataAccess.DbSeeder
@@ -22,7 +16,7 @@ namespace Shoppie.DataAccess.DbSeeder
                 new Category { Id = 4, IsActive = true, Name = "Food" },
                 new Category { Id = 5, IsActive = true, Name = "Garment" },
                 new Category { Id = 6, IsActive = true, Name = "Gaming" }
-                );        
+                );
         }
     }
     internal class OfferEntitySeed : IEntityTypeConfiguration<Offer>
