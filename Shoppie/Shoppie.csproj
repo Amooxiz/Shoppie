@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\Middleware\" />
+    <Folder Include="wwwroot\xd\" />
   </ItemGroup>
 
 </Project>

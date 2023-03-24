@@ -4,19 +4,18 @@
 // Write your JavaScript code.
 
 
+const keyValues = window.location.search;
 
-const currButton = document.getElementById('currency');
-const currencies = document.querySelectorAll('#curr');
-console.log(currencies);
+const urlParams = new URLSearchParams(keyValues);
+const pageNr = urlParams?.get('pageNr');
 
-const changeVisiblity = (value) => {
-    currencies.forEach((curr) => {
-        if (curr.style.display === "none") {
-            curr.style.display = 'block';
-        }
-        else {
-            curr.style.display = 'none';
-        }
-    })
+const paginationLink = document.getElementsByClassName('custom-page-link')
+
+const a = document.querySelector(`a[data-index="${pageNr ?? 1}"]`);
+
+StyleLink(a);
+
+function StyleLink(a) {
+    a.style.border = '1px solid black';
+    a.style.borderRadius = '50%';
 }
-currButton.addEventListener('click', changeVisiblity);

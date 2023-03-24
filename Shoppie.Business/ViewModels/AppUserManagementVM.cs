@@ -1,6 +1,6 @@
 ﻿namespace Shoppie.Business.ViewModels
 {
-    public class AppUserManagementModel
+    public class AppUserManagementVM
     {
         public AppUserVM User { get; set; }
         public int SelectedRoleId { get; set; }

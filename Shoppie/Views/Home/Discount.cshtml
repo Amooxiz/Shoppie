@@ -3,77 +3,8 @@
 
 @{
     ViewData["Title"] = "DiscountOffers";
+    PaginationModel paginationModel = ViewBag.Pager;
 }
 
-<h1>DiscountOffers</h1>
-
-<h1>ItemCount: @ViewBag.cartCount</h1>
-<a asp-controller="Offer" asp-action="Index">AllOffers</a>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsFinished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsFinished)
-                </td>
-                @if (item.Discount > 0)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Discount)%
-                    </td>
-                }
-                else
-                {
-                    <td></td>
-                }
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    <a asp-action="AddToCart" asp-route-id="@item.Id" class="add-to-cart-btn">AddToCart</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
+<partial name="_OffersPartial" model="@Model" />
+<partial name="_PaginationBarPartial" model="paginationModel" />

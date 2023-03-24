@@ -3,7 +3,6 @@
 #nullable disable
 
 
-using Shoppie.DataAccess;
 using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Areas.Identity.Pages.Account

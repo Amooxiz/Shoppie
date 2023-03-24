@@ -10,6 +10,9 @@
         <form asp-action="Edit" class="form">
 <h1 class="text-white">Edit Offer</h1>
 <hr />
+
+            <input hidden asp-for="ImagePath" class="form-control" />
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />

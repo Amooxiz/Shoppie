@@ -1,6 +1,4 @@
-﻿using Azure.Core;
-
-namespace Shoppie.Middleware
+﻿namespace Shoppie.Middleware
 {
     public class AssignCookieMiddleware
     {

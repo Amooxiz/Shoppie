@@ -3,8 +3,6 @@
 #nullable disable
 
 
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Shoppie.DataAccess;
 using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Areas.Identity.Pages.Account.Manage

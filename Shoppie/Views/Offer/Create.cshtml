@@ -1,5 +1,4 @@
-﻿@using Shoppie.DataAccess.Entities;
-@model  Offer
+﻿@model  OfferVM
 
 @{
     ViewData["Title"] = "Create";
@@ -11,37 +10,46 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" class="form">
+        <form asp-action="Create" class="form" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
          
           
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="Description" class="control-label"></label>
+            <textarea asp-for="Description" class="form-textarea form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
        
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+            <label asp-for="Price" class="control-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
           
-                <label asp-for="Discount" class="control-label"></label>
-                <input asp-for="Discount" class="form-control" />
-                <span asp-validation-for="Discount" class="text-danger"></span>
+            <label asp-for="Discount" class="control-label"></label>
+            <input asp-for="Discount" class="form-control" />
+            <span asp-validation-for="Discount" class="text-danger"></span>
          
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+            <label asp-for="CategoryId" class="control-label"></label>
+            <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+         
             <div class="flex__container">
 
                 <label asp-for="IsActive" class="form-check-label"></label>
-            <input class="form-checkbox" asp-for="IsActive" />
+                <input class="form-checkbox" asp-for="IsActive" />
 
-            <label asp-for="IsFinished" class="form-check-label"></label>
-            <input class="form-checkbox" asp-for="IsFinished" />
+                <label asp-for="IsFinished" class="form-check-label"></label>
+                <input class="form-checkbox" asp-for="IsFinished" />
             </div>
 
+            <label asp-for="Image" class="form-check-label"></label>
+            <input class="form-img from-control" asp-for="Image" accept=".jpg,.png" />
+            <span asp-validation-for="Image" class="text-danger"></span>
+@*
+            <label asp-for="" class="control-label"></label>
+            <input asp-for="Discount" class="form-control" />
+            <span asp-validation-for="Discount" class="text-danger"></span>
+*@
             <input type="submit" value="Create" class="login-submit" />
 
         </form>

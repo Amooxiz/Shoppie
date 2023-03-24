@@ -1,8 +1,7 @@
 ﻿namespace Shoppie.Business.ViewModels
 {
-    public class OfferManagementModel
+    public class OfferManagementVM
     {
-        public List<AppUserVM> Users { get; set; }
         public List<OfferVM> Offers { get; set; }
         public List<CategoryVM> Categories { get; set; }
         public int SelectedCategoryId { get; set; }
