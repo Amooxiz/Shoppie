@@ -1,7 +1,7 @@
-﻿using Shoppie.Business.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using Shoppie.Business.Services.Interfaces;
 using Shoppie.DataAccess.Entities;
 using Shoppie.DataAccess.Repositories.Interfaces;
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
 namespace Shoppie.Business.Services
@@ -42,7 +42,7 @@ namespace Shoppie.Business.Services
         {
             string? userId;
             bool IsAuthenthicated;
-            
+
             if (_ctx.HttpContext.User.Identity.IsAuthenticated is true)
             {
                 userId = _ctx.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -53,17 +53,17 @@ namespace Shoppie.Business.Services
                 userId = _ctx.HttpContext.Request.Cookies["UserId"];
                 IsAuthenthicated = false;
             }
-            
+
             var cart = await _cartRepository.GetCartAsync(userId);
 
             if (cart is null)
-            { 
-               await CreateCartAsync(userId, IsAuthenthicated);
-               cart = await _cartRepository.GetCartAsync(userId);
+            {
+                await CreateCartAsync(userId, IsAuthenthicated);
+                cart = await _cartRepository.GetCartAsync(userId);
             }
 
             return cart;
         }
 
- }
+    }
 }

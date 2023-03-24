@@ -1,0 +1,16 @@
+﻿@model PaginationModel
+
+<div class="pagination-wrapper">
+    <ul class="pagination pagination-sm">       
+        @for (var pageNr = Model.StartPage; pageNr <= Model.EndPage; pageNr++)
+        {
+            <li class="custom-page-item">
+                <a class="custom-page-link" asp-action="@Model.Action"
+                   asp-route-pageNr="@pageNr"
+                   data-index="@pageNr" >
+                   @pageNr 
+                </a>
+            </li>
+        }
+    </ul>
+</div>

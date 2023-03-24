@@ -1,7 +1,9 @@
-﻿namespace Shoppie.Business.Services.Interfaces
+﻿using Shoppie.Business.SupportModels;
+
+namespace Shoppie.Business.Services.Interfaces
 {
     public interface INBPIntegratorService
     {
-        public Task<double> GetRate(string symbol);
+        public Task<NBPConvertModel?> GetRate(string symbol);
     }
 }

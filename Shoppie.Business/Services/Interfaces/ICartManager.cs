@@ -1,11 +1,4 @@
-﻿using Microsoft.Data.SqlClient.DataClassification;
-using Shoppie.DataAccess.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+﻿using Shoppie.DataAccess.Entities;
 
 namespace Shoppie.Business.Services.Interfaces
 {

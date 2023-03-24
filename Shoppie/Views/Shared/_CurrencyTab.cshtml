@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+
+<div class="currency-bar"> 
+        <div class="currency-bar-text">
+            <p>Change currency: </p>            
+        </div>
+        <div class="currency-flag-box">
+        <a asp-action="ChangeCurrency" asp-route-prefix="PLN">
+                <img src="https://img.icons8.com/fluency/25/null/poland-circular.png" alt="Polish flag" title="PLN" />
+            </a>
+        </div>
+        <div class="currency-flag-box">
+        <a asp-action="ChangeCurrency" asp-route-prefix="USD">
+            <img src="https://img.icons8.com/fluency/25/null/usa-circular.png" alt="US flag" title="$" />
+        </a>
+        </div>
+        <div class="currency-flag-box">
+        <a asp-action="ChangeCurrency" asp-route-prefix="EUR">
+            <img src="https://img.icons8.com/fluency/25/null/european-union-circular-flag.png" alt="EU flag" title="€" />
+        </a>
+        </div>
+</div>
+
+
+
+@{
+    //<a target="_blank" href="https://icons8.com/icon/Y76SzpmxslW4/european-union-circular-flag">European Union Circular Flag icon by Icons8</a>
+    //<a target="_blank" href="https://icons8.com/icon/fIgZUHgwc76e/usa">Usa icon by Icons8</a>
+    //<a target="_blank" href="https://icons8.com/icon/civsLZTDrVTT/poland">Poland icon by Icons8</a>
+        
+}

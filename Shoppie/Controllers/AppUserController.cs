@@ -43,7 +43,7 @@ namespace Shoppie.Controllers
             if (user is null)
                 return NotFound();
 
-            var model = new AppUserManagementModel
+            var model = new AppUserManagementVM
             {
                 User = user,
             };
@@ -54,7 +54,7 @@ namespace Shoppie.Controllers
         // POST: AppUserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(AppUserManagementModel model)
+        public async Task<ActionResult> Edit(AppUserManagementVM model)
         {
             var user = await _userManager.FindByIdAsync(model.User.Id);
 

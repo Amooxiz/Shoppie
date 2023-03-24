@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Identity.Client;
 using Shoppie.Business.Seeders.Enums;
 using Shoppie.DataAccess.Entities;
 
@@ -21,7 +20,7 @@ namespace Shoppie.Business.Seeders
                 {
                     Name = Roles.Administrator.ToString()
                 };
-                
+
                 var result = await roleManager.CreateAsync(role);
 
                 if (!result.Succeeded)
@@ -31,7 +30,7 @@ namespace Shoppie.Business.Seeders
 
             }
 
-            if (! await roleManager.RoleExistsAsync(Roles.BasicUser.ToString()))
+            if (!await roleManager.RoleExistsAsync(Roles.BasicUser.ToString()))
             {
                 var role = new IdentityRole
                 {
@@ -40,7 +39,7 @@ namespace Shoppie.Business.Seeders
 
                 var result = await roleManager.CreateAsync(role);
 
-                if(!result.Succeeded)
+                if (!result.Succeeded)
                 {
                     throw new Exception();
                 }

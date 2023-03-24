@@ -1,66 +1,66 @@
 ﻿using Shoppie.Business.Services.Interfaces;
 using Shoppie.Business.ViewModels;
-using Shoppie.DataAccess.Entities;
 using System.Diagnostics;
-using System.Security.Claims;
 
 namespace Shoppie.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IOfferService _offerService;
-        private readonly ICookieService _cookieService;
         private readonly ICartManager _cartManager;
+        private readonly INBPIntegratorService _nbpIntegratorService;
 
-        public HomeController(IOfferService offerService, ICookieService cookieService, ICartManager cartManager)
+        public HomeController(IOfferService offerService, ICartManager cartManager, INBPIntegratorService nbpIntegratorService)
         {
             _offerService = offerService;
-            _cookieService = cookieService;
             _cartManager = cartManager;
+            _nbpIntegratorService = nbpIntegratorService;
         }
 
-        public async Task<IActionResult> New()
+        public async Task<IActionResult> New(int pageNr = 1, int pageSize = 7)
         {
-            var offers = await _offerService.GetNewOffersAsync(3);
+            (var offers, var totalCount) = await _offerService.GetNewOffersPaginatedAsync(pageNr, pageSize, 10);
 
-            return View(offers);
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            var offers = await _offerService.GetAllActiveOffersAsync();
-
-            return View(offers);
-        }
-
-        public async Task<IActionResult> Cart()
-        {
-            if (HttpContext.Request.Cookies["UserId"] is null || !User.Identity.IsAuthenticated)
+            var pager = new PaginationModel(totalCount, pageNr, pageSize)
             {
-                RedirectToAction("Index");
-            } 
+                Action = nameof(New)
+            };
 
-            var cart = _cookieService.GetCart();
+            ViewBag.Pager = pager;
 
-            return View(cart.Items);
+            return View(offers);
         }
 
-        public async Task<IActionResult> AddToCart(int id)
+        public async Task<IActionResult> Index(int pageNr = 1, int pageSize = 1)
         {
-            await _cartManager.AddToCartAsync(id);
+            (var offers, var totalCount) = await _offerService.GetAllOffersPaginatedAsync(pageNr, pageSize);
 
-            return RedirectToAction("Index");
+            var pager = new PaginationModel(totalCount, pageNr, pageSize);
+            ViewBag.Pager = pager;
+
+            return View(offers);
+        }
+        public async Task<IActionResult> ChangeCurrency(string prefix)
+        {
+            if (prefix is null)
+            {
+                throw new ArgumentNullException(nameof(prefix));
+            }
+
+            if (prefix == "PLN")
+            {
+                RedirectToAction(nameof(Index));
+            }
+
+            _nbpIntegratorService.GetRate(prefix);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult ChangeRate(string rate)
+        public async Task<IActionResult> Discount(int pageNr = 1, int pageSize = 7)
         {
-            return RedirectToAction("Index");
-        }
-        
-        public async Task<IActionResult> Discount()
-        {
-            var offers = await _offerService.GetDiscountedOffersAsync();
-            
+            (var offers, var totalCount) = await _offerService.GetDiscountedOffersPaginatedAsync(pageNr, pageSize);
+
             foreach (var offer in offers)
             {
                 if (offer.Discount > 0)
@@ -71,7 +71,14 @@ namespace Shoppie.Controllers
             offers.ForEach(x => x.Price = Math.Round(x.Price, 2));
 
 
+            var pager = new PaginationModel(totalCount, pageNr, pageSize)
+            {
+                Action = nameof(Discount)
+            };
+            ViewBag.Pager = pager;
+
             return View(offers);
+
         }
 
         public IActionResult Privacy()
@@ -82,7 +89,7 @@ namespace Shoppie.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorVM { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Shoppie.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [Display(Name= "First Name")]            
+            [Display(Name = "First Name")]
             [RegularExpression(@"^[a-zA-Z]+(([',.\- ][a-zA-Z ])?[a-zA-Z]*)*$", ErrorMessage = "The name must contain only Latin letters and special characters")]
             public string Name { get; set; }
 
@@ -123,7 +123,7 @@ namespace Shoppie.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _userManager.AddToRoleAsync(user, Roles.BasicUser.ToString()).Wait();
-                    
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
